@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Audit Logs | HealthGuard AI</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/responsive.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           AUDIT PAGE
+           ===================================================== */
+
+        .audit-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .audit-page-header h1 {
+            margin-bottom: 10px;
+        }
+
+        .audit-page-header p {
+            max-width: 760px;
+        }
+
+        .audit-security-badge {
+            padding: 12px 18px;
+            border: 1px solid rgba(51, 255, 190, 0.18);
+            background: rgba(51, 255, 190, 0.06);
+            border-radius: 12px;
+            color: #4fffc1;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+           ===================================================== */
+
+        .audit-summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .audit-summary-card {
+            background: #0b1a2b;
+            border: 1px solid rgba(120, 170, 220, 0.14);
+            border-radius: 16px;
+            padding: 22px;
+        }
+
+        .audit-summary-card span {
+            display: block;
+            color: #7691ae;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .audit-summary-card strong {
+            font-size: 28px;
+            color: #f3f8ff;
+        }
+
+        .audit-summary-card small {
+            display: block;
+            margin-top: 7px;
+            color: #617b97;
+        }
+
+
+        /* =====================================================
+           AUDIT PANEL
+           ===================================================== */
+
+        .audit-panel {
+            background: #0b1a2b;
+            border: 1px solid rgba(120, 170, 220, 0.14);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .audit-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 26px;
+            border-bottom: 1px solid rgba(120, 170, 220, 0.10);
+        }
+
+        .audit-panel-header h2 {
+            margin: 5px 0 0;
+        }
+
+        .audit-count {
+            color: #6f8aa7;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           AUDIT EVENT
+           ===================================================== */
+
+        .audit-event {
+            padding: 24px 26px;
+            border-bottom: 1px solid rgba(120, 170, 220, 0.08);
+        }
+
+        .audit-event:last-child {
+            border-bottom: none;
+        }
+
+        .audit-event-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .audit-event-main {
+            display: flex;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .audit-event-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #102b43;
+
+            color: #2db9ff;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .audit-event-info strong {
+            display: block;
+            color: #edf5ff;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .audit-event-info span {
+            display: block;
+            color: #39bfff;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .audit-event-info small {
+            color: #6f8aa7;
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           DECISION BADGES
+           ===================================================== */
+
+        .audit-decision {
+            display: inline-flex;
+            align-items: center;
+            padding: 7px 12px;
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+
+        .audit-decision.allow {
+            color: #35e6aa;
+            background: rgba(53, 230, 170, 0.08);
+            border: 1px solid rgba(53, 230, 170, 0.20);
+        }
+
+        .audit-decision.deny {
+            color: #ff6d7d;
+            background: rgba(255, 70, 90, 0.08);
+            border: 1px solid rgba(255, 70, 90, 0.20);
+        }
+
+        .audit-decision.mfa_required {
+            color: #ffc857;
+            background: rgba(255, 200, 87, 0.08);
+            border: 1px solid rgba(255, 200, 87, 0.20);
+        }
+
+
+        /* =====================================================
+           EVENT DETAILS
+           ===================================================== */
+
+        .audit-event-details {
+            margin-top: 18px;
+
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 12px;
+        }
+
+        .audit-detail {
+            background: #071525;
+            border-radius: 10px;
+            padding: 13px 15px;
+        }
+
+        .audit-detail span {
+            display: block;
+            color: #59738f;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .7px;
+            margin-bottom: 5px;
+        }
+
+        .audit-detail strong {
+            color: #dbe9f8;
+            font-size: 12px;
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           REASON
+           ===================================================== */
+
+        .audit-reason {
+            margin-top: 14px;
+            padding: 14px 16px;
+
+            background: rgba(19, 42, 64, 0.55);
+
+            border-left: 3px solid #249ee8;
+
+            border-radius: 7px;
+
+            color: #7894b0;
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           EMPTY / LOADING
+           ===================================================== */
+
+        .audit-loading,
+        .audit-empty,
+        .audit-error {
+            padding: 55px 25px;
+            text-align: center;
+            color: #6f8aa7;
+        }
+
+        .audit-error {
+            color: #ff7885;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .audit-summary-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .audit-event-details {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .audit-page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .audit-summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .audit-event-top {
+                flex-direction: column;
+            }
+
+            .audit-event-details {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-brand">
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                ✚
+            </span>
+
+            <span>
+                HealthGuard<span class="logo-ai"> AI</span>
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+        <div
+            class="user-avatar"
+            id="sidebarAvatar"
+        >
+            PT
+        </div>
+
+        <div class="sidebar-user-info">
+
+            <strong id="sidebarName">
+                Patient
+            </strong>
+
+            <span>
+                Patient
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+        <span class="nav-section-title">
+            MY HEALTH DATA
+        </span>
+
+
+        <a
+            href="dashboard.html"
+            class="sidebar-link"
+        >
+            <span>▦</span>
+            Dashboard
+        </a>
+
+
+        <a
+            href="documents.html"
+            class="sidebar-link"
+        >
+            <span>▤</span>
+            My Documents
+        </a>
+
+
+        <a
+            href="consents.html"
+            class="sidebar-link"
+        >
+            <span>◫</span>
+            Consent Management
+        </a>
+
+
+        <span class="nav-section-title security-nav-title">
+            SECURITY
+        </span>
+
+
+        <a
+            href="audit-logs.html"
+            class="sidebar-link active"
+        >
+            <span>◌</span>
+            Audit Logs
+        </a>
+
+
+        <a
+            href="../security/dashboard.html"
+            class="sidebar-link"
+        >
+            <span>🛡</span>
+            Security Center
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-security-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+
+                <strong>
+                    Data Protected
+                </strong>
+
+                <small>
+                    HealthGuard AI
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="logout-button"
+            id="logoutButton"
+        >
+
+            <span>
+                ↪
+            </span>
+
+            Logout
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main class="dashboard-main">
+
+
+<header class="dashboard-topbar">
+
+    <div class="mobile-brand">
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+
+            <span class="logo-icon">
+                ✚
+            </span>
+
+            <span>
+                HealthGuard<span class="logo-ai"> AI</span>
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="topbar-right">
+
+        <div class="security-pill">
+
+            <span class="status-dot"></span>
+
+            Data Protected
+
+        </div>
+
+
+        <div class="topbar-user">
+
+            <div
+                class="topbar-avatar"
+                id="topbarAvatar"
+            >
+                PT
+            </div>
+
+            <div>
+
+                <strong id="topbarName">
+                    Patient
+                </strong>
+
+                <span>
+                    Patient Account
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     CONTENT
+     ========================================================= -->
+
+<div class="dashboard-content">
+
+
+<section class="audit-page-header">
+
+    <div>
+
+        <span class="page-label">
+            SECURITY & PRIVACY
+        </span>
+
+        <h1>
+            Audit Logs
+        </h1>
+
+        <p>
+            Review who accessed your healthcare data,
+            when they accessed it, why access was requested,
+            and how HealthGuard AI responded.
+        </p>
+
+    </div>
+
+
+    <div class="audit-security-badge">
+        ● AUDIT MONITORING ACTIVE
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     SUMMARY
+     ========================================================= -->
+
+<section class="audit-summary-grid">
+
+    <div class="audit-summary-card">
+
+        <span>
+            TOTAL EVENTS
+        </span>
+
+        <strong id="totalEvents">
+            --
+        </strong>
+
+        <small>
+            Recorded activity
+        </small>
+
+    </div>
+
+
+    <div class="audit-summary-card">
+
+        <span>
+            ALLOWED
+        </span>
+
+        <strong id="allowedEvents">
+            --
+        </strong>
+
+        <small>
+            Access permitted
+        </small>
+
+    </div>
+
+
+    <div class="audit-summary-card">
+
+        <span>
+            BLOCKED
+        </span>
+
+        <strong id="blockedEvents">
+            --
+        </strong>
+
+        <small>
+            Access denied
+        </small>
+
+    </div>
+
+
+    <div class="audit-summary-card">
+
+        <span>
+            HIGH RISK
+        </span>
+
+        <strong id="highRiskEvents">
+            --
+        </strong>
+
+        <small>
+            AI security detections
+        </small>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     AUDIT EVENTS
+     ========================================================= -->
+
+<section class="audit-panel">
+
+    <div class="audit-panel-header">
+
+        <div>
+
+            <span class="panel-label">
+                ACTIVITY HISTORY
+            </span>
+
+            <h2>
+                Healthcare Data Access
+            </h2>
+
+        </div>
+
+
+        <span
+            class="audit-count"
+            id="auditCount"
+        >
+            Loading...
+        </span>
+
+    </div>
+
+
+    <div id="auditEvents">
+
+        <div class="audit-loading">
+            Loading audit history...
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<script src="../js/api.js"></script>
+
+<script src="../js/patient.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadAuditLogs
+);
+
+
+async function loadAuditLogs() {
+
+    try {
+
+        const logs =
+            await apiRequest(
+                "/security/audit-logs",
+                {
+                    method: "GET"
+                }
+            );
+
+
+        if (!Array.isArray(logs)) {
+
+            throw new Error(
+                "Invalid audit log response."
+            );
+
+        }
+
+
+        updateSummary(logs);
+
+        renderAuditLogs(logs);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Audit log loading failed:",
+            error
+        );
+
+
+        const container =
+            document.getElementById(
+                "auditEvents"
+            );
+
+
+        if (container) {
+
+            container.innerHTML = `
+                <div class="audit-error">
+                    Unable to load audit history.
+                    Please refresh the page and try again.
+                </div>
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+function updateSummary(logs) {
+
+    const total =
+        logs.length;
+
+
+    const allowed =
+        logs.filter(
+            log =>
+                String(log.decision)
+                    .toUpperCase()
+                === "ALLOW"
+        ).length;
+
+
+    const blocked =
+        logs.filter(
+            log =>
+                String(log.decision)
+                    .toUpperCase()
+                === "DENY"
+        ).length;
+
+
+    const highRisk =
+        logs.filter(
+            log =>
+                log.risk_score !== null &&
+                Number(log.risk_score) >= 70
+        ).length;
+
+
+    document.getElementById(
+        "totalEvents"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "allowedEvents"
+    ).textContent = allowed;
+
+
+    document.getElementById(
+        "blockedEvents"
+    ).textContent = blocked;
+
+
+    document.getElementById(
+        "highRiskEvents"
+    ).textContent = highRisk;
+
+
+    document.getElementById(
+        "auditCount"
+    ).textContent =
+        `${total} recorded events`;
+
+}
+
+
+/* =========================================================
+   RENDER LOGS
+   ========================================================= */
+
+function renderAuditLogs(logs) {
+
+    const container =
+        document.getElementById(
+            "auditEvents"
+        );
+
+
+    if (!logs.length) {
+
+        container.innerHTML = `
+            <div class="audit-empty">
+                No healthcare data access events
+                have been recorded yet.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        logs
+            .map(
+                log =>
+                    createAuditEvent(log)
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   CREATE EVENT
+   ========================================================= */
+
+function createAuditEvent(log) {
+
+    const decision =
+        String(
+            log.decision || "UNKNOWN"
+        ).toLowerCase();
+
+
+    const decisionText =
+        String(
+            log.decision || "UNKNOWN"
+        ).replace(
+            "_",
+            " "
+        );
+
+
+    const riskScore =
+        log.risk_score !== null &&
+        log.risk_score !== undefined
+            ? Number(log.risk_score).toFixed(2)
+            : "Not evaluated";
+
+
+    const riskLevel =
+        log.risk_level ||
+        "Not evaluated";
+
+
+    const prediction =
+        log.prediction ||
+        "Not evaluated";
+
+
+    const timestamp =
+        formatDate(
+            log.accessed_at
+        );
+
+
+    const hospital =
+        log.hospital_name ||
+        "Healthcare Organization";
+
+
+    const document =
+        log.document_name ||
+        `Medical Document #${log.document_id}`;
+
+
+    const purpose =
+        log.purpose ||
+        "Medical record access";
+
+
+    return `
+
+        <article class="audit-event">
+
+            <div class="audit-event-top">
+
+
+                <div class="audit-event-main">
+
+                    <div class="audit-event-icon">
+                        DOC
+                    </div>
+
+
+                    <div class="audit-event-info">
+
+                        <strong>
+                            ${escapeHtml(document)}
+                        </strong>
+
+                        <span>
+                            ${escapeHtml(hospital)}
+                        </span>
+
+                        <small>
+                            ${escapeHtml(purpose)}
+                            ·
+                            ${escapeHtml(timestamp)}
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <span
+                    class="audit-decision ${decision}"
+                >
+                    ${escapeHtml(
+                        decisionText.toUpperCase()
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="audit-event-details">
+
+
+                <div class="audit-detail">
+
+                    <span>
+                        Accessed By
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            log.user_name
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="audit-detail">
+
+                    <span>
+                        Risk Level
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            riskLevel
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="audit-detail">
+
+                    <span>
+                        Risk Score
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            riskScore
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="audit-detail">
+
+                    <span>
+                        AI Prediction
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            prediction
+                        )}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="audit-reason">
+
+                <strong>
+                    Security reason:
+                </strong>
+
+                ${escapeHtml(
+                    log.reason ||
+                    "No additional reason recorded."
+                )}
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   DATE FORMAT
+   ========================================================= */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "Unknown time";
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        }
+    );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPING
+   ========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

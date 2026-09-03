@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Consent Management | HealthGuard AI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <a href="../index.html" class="logo">
+
+                <span class="logo-icon">
+                    ✚
+                </span>
+
+                <span>
+                    HealthGuard<span class="logo-ai"> AI</span>
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div
+                class="user-avatar"
+                id="sidebarAvatar"
+            >
+                PT
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarName">
+                    Patient
+                </strong>
+
+                <span>
+                    Patient
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <span class="nav-section-title">
+                MY HEALTH DATA
+            </span>
+
+
+            <a
+                href="dashboard.html"
+                class="sidebar-link"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="documents.html"
+                class="sidebar-link"
+            >
+                <span>▤</span>
+                My Documents
+            </a>
+
+
+            <a
+                href="consents.html"
+                class="sidebar-link active"
+            >
+                <span>◫</span>
+                Consent Management
+            </a>
+
+
+            <span class="nav-section-title security-nav-title">
+                SECURITY
+            </span>
+
+
+            <a
+                href="audit-logs.html"
+                class="sidebar-link"
+            >
+                <span>◌</span>
+                Audit Logs
+            </a>
+
+
+            <a
+                href="../security/dashboard.html"
+                class="sidebar-link"
+            >
+                <span>🛡</span>
+                Security Center
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-security-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        Data Protected
+                    </strong>
+
+                    <small>
+                        HealthGuard AI
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="logout-button"
+                id="logoutButton"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="dashboard-topbar">
+
+            <div class="mobile-brand">
+
+                <a
+                    href="../index.html"
+                    class="logo"
+                >
+
+                    <span class="logo-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        HealthGuard<span class="logo-ai"> AI</span>
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="security-pill">
+
+                    <span class="status-dot"></span>
+
+                    Data Protected
+
+                </div>
+
+
+                <div class="topbar-user">
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        PT
+                    </div>
+
+
+                    <div>
+
+                        <strong id="topbarName">
+                            Patient
+                        </strong>
+
+                        <span>
+                            Patient Account
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <div class="dashboard-content">
+
+
+            <!-- HEADER -->
+
+            <section class="page-header">
+
+                <div>
+
+                    <span class="page-label">
+                        PATIENT CONTROL
+                    </span>
+
+                    <h1>
+                        Consent Management
+                    </h1>
+
+                    <p>
+                        Control which healthcare professionals
+                        can access your medical information,
+                        why they can access it and for how long.
+                    </p>
+
+                </div>
+
+
+                <div class="page-date">
+
+                    <span>
+                        CONSENT POLICY
+                    </span>
+
+                    <strong>
+                        ● Patient Controlled
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= CONSENT SUMMARY ================= -->
+
+            <section class="dashboard-stats">
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon purple">
+                        ◫
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Total Consents
+                        </span>
+
+                        <strong id="totalConsents">
+                            1
+                        </strong>
+
+                        <small>
+                            Access permissions
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon orange">
+                        !
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Pending
+                        </span>
+
+                        <strong id="pendingConsents">
+                            0
+                        </strong>
+
+                        <small>
+                            Awaiting your decision
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Approved
+                        </span>
+
+                        <strong id="approvedConsents">
+                            1
+                        </strong>
+
+                        <small>
+                            Currently permitted
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon blue">
+                        ⏱
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Time Limited
+                        </span>
+
+                        <strong>
+                            YES
+                        </strong>
+
+                        <small>
+                            Automatic expiry
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= ACTIVE CONSENT ================= -->
+
+            <section class="dashboard-panel consent-main-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            ACCESS PERMISSIONS
+                        </span>
+
+                        <h2>
+                            Your Consent Records
+                        </h2>
+
+                    </div>
+
+
+                    <span class="live-badge">
+                        <span></span>
+                        PROTECTED
+                    </span>
+
+                </div>
+
+
+                <!-- CONSENT CARD -->
+
+                <div
+                    class="consent-record"
+                    id="consentRecord2"
+                    data-consent-id="2"
+                >
+
+
+                    <div class="consent-record-header">
+
+
+                        <div class="consent-record-title">
+
+                            <div class="consent-document-icon">
+                                ECG
+                            </div>
+
+
+                            <div>
+
+                                <strong>
+                                    Rahul_ECG_Report.pdf
+                                </strong>
+
+                                <span>
+                                    ECG Medical Report
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="status-badge approved"
+                            id="consentStatus2"
+                        >
+                            APPROVED
+                        </span>
+
+                    </div>
+
+
+                    <div class="consent-details-grid">
+
+
+                        <div class="consent-detail">
+
+                            <span>
+                                REQUESTING ORGANIZATION
+                            </span>
+
+                            <strong>
+                                SecureCare Medical Center
+                            </strong>
+
+                        </div>
+
+
+                        <div class="consent-detail">
+
+                            <span>
+                                ACCESS PURPOSE
+                            </span>
+
+                            <strong>
+                                Cardiac consultation
+                            </strong>
+
+                        </div>
+
+
+                        <div class="consent-detail">
+
+                            <span>
+                                ACCESS STARTS
+                            </span>
+
+                            <strong>
+                                02 Sep 2026
+                            </strong>
+
+                        </div>
+
+
+                        <div class="consent-detail">
+
+                            <span>
+                                ACCESS EXPIRES
+                            </span>
+
+                            <strong>
+                                05 Sep 2026
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="consent-security-bar">
+
+                        <div>
+
+                            <span class="security-bar-icon">
+                                🛡
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Zero Trust protected
+                                </strong>
+
+                                <small>
+                                    Approval does not bypass
+                                    HealthGuard AI security checks.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="revoke-button"
+                            id="revokeConsent2"
+                        >
+                            Revoke Access
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMPTY STATE -->
+
+                <div
+                    class="consent-empty"
+                    id="consentEmpty"
+                    style="display:none;"
+                >
+
+                    <div class="empty-icon">
+                        ◫
+                    </div>
+
+                    <strong>
+                        No consent records
+                    </strong>
+
+                    <span>
+                        Access permissions will appear here
+                        when healthcare providers request them.
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= EXPLANATION ================= -->
+
+            <section class="dashboard-grid consent-info-grid">
+
+
+                <div class="dashboard-panel">
+
+                    <div class="principle-icon">
+                        🔐
+                    </div>
+
+                    <span class="panel-label">
+                        YOUR CONTROL
+                    </span>
+
+                    <h2>
+                        You decide who gets access.
+                    </h2>
+
+                    <p>
+                        A healthcare provider cannot access
+                        your document simply because they are
+                        authorized within their organization.
+                        Your consent is an additional control
+                        layer.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-panel">
+
+                    <div class="principle-icon">
+                        ⏱
+                    </div>
+
+                    <span class="panel-label">
+                        TIME BOUND
+                    </span>
+
+                    <h2>
+                        Access automatically expires.
+                    </h2>
+
+                    <p>
+                        Every consent contains a defined
+                        start and expiry time. Once the
+                        permission expires, document access
+                        is rejected.
+                    </p>
+
+                </div>
+
+
+                <div class="dashboard-panel">
+
+                    <div class="principle-icon">
+                        🧠
+                    </div>
+
+                    <span class="panel-label">
+                        AI SECURITY
+                    </span>
+
+                    <h2>
+                        Consent isn't the final decision.
+                    </h2>
+
+                    <p>
+                        Even approved access is evaluated by
+                        HealthGuard AI's Zero Trust and
+                        behavioral anomaly detection layers.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- NOTICE -->
+
+            <section class="security-notice">
+
+                <div class="notice-icon">
+                    🛡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Approved access can still be blocked.
+                    </strong>
+
+                    <p>
+                        Patient consent establishes permission,
+                        but HealthGuard AI continuously evaluates
+                        identity, context and behavior before
+                        allowing document access.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+    <script src="../js/patient.js"></script>
+
+</body>
+
+</html>

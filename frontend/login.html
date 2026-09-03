@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | HealthGuard AI</title>
+
+    <meta name="description"
+          content="Securely access your HealthGuard AI healthcare security account.">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body class="auth-page">
+
+    <div class="auth-background">
+        <div class="auth-glow auth-glow-one"></div>
+        <div class="auth-glow auth-glow-two"></div>
+    </div>
+
+    <main class="auth-wrapper">
+
+        <section class="auth-card">
+
+            <!-- Brand -->
+
+            <div class="auth-brand">
+
+                <a href="index.html" class="logo">
+                    <span class="logo-icon">✚</span>
+                    <span>
+                        HealthGuard<span class="logo-ai"> AI</span>
+                    </span>
+                </a>
+
+                <div class="security-badge">
+                    <span class="status-dot"></span>
+                    Secure Authentication
+                </div>
+
+            </div>
+
+
+            <!-- Heading -->
+
+            <div class="auth-heading">
+
+                <h1>Welcome back</h1>
+
+                <p>
+                    Sign in to securely access your HealthGuard AI account.
+                </p>
+
+            </div>
+
+
+            <!-- Error -->
+
+            <div id="authMessage" class="auth-message hidden"></div>
+
+
+            <!-- Login Form -->
+
+            <form id="loginForm" class="auth-form">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <div class="label-row">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <span class="secure-text">
+                            Protected
+                        </span>
+
+                    </div>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                    id="loginButton"
+                >
+                    <span id="loginButtonText">
+                        Sign In
+                    </span>
+
+                    <span id="loginSpinner" class="spinner hidden"></span>
+
+                    <span>→</span>
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+
+            <div class="auth-divider">
+                <span>SECURE HEALTHCARE PLATFORM</span>
+            </div>
+
+
+            <!-- Security information -->
+
+            <div class="auth-security">
+
+                <div class="security-item">
+                    <span>🛡</span>
+                    <div>
+                        <strong>Zero Trust</strong>
+                        <small>Continuous verification</small>
+                    </div>
+                </div>
+
+                <div class="security-item">
+                    <span>🔐</span>
+                    <div>
+                        <strong>Protected</strong>
+                        <small>Secure authentication</small>
+                    </div>
+                </div>
+
+                <div class="security-item">
+                    <span>🤖</span>
+                    <div>
+                        <strong>AI Security</strong>
+                        <small>Behavior monitoring</small>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Register -->
+
+            <p class="auth-footer-text">
+                Don't have an account?
+                <a href="register.html">Create an account</a>
+            </p>
+
+
+            <a href="index.html" class="back-home">
+                ← Back to HealthGuard AI
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+</html>

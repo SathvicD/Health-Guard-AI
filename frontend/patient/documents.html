@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Documents | HealthGuard AI</title>
+
+    <meta
+        name="description"
+        content="Securely manage your medical documents with HealthGuard AI."
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css"
+    >
+
+    <style>
+
+        .documents-page {
+            padding: 32px;
+        }
+
+        .documents-header {
+            margin-bottom: 28px;
+        }
+
+        .documents-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .documents-header p {
+            opacity: 0.7;
+        }
+
+        .upload-card {
+            padding: 28px;
+            margin-bottom: 32px;
+        }
+
+        .upload-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .upload-card-description {
+            opacity: 0.7;
+            margin-bottom: 24px;
+        }
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .upload-full {
+            grid-column: 1 / -1;
+        }
+
+        .file-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px dashed rgba(255,255,255,0.25);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .document-message {
+            margin-bottom: 18px;
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+
+        .document-message.success {
+            border: 1px solid rgba(80, 200, 120, 0.35);
+        }
+
+        .document-message.error {
+            border: 1px solid rgba(255, 80, 80, 0.35);
+        }
+
+        .documents-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .document-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .document-icon {
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.06);
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .document-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .document-info h3 {
+            margin: 0 0 7px;
+            word-break: break-word;
+        }
+
+        .document-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 13px;
+            opacity: 0.65;
+        }
+
+        .document-info p {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .secure-badge {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .documents-loading,
+        .documents-empty {
+            text-align: center;
+            padding: 50px 20px;
+            opacity: 0.7;
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 700px) {
+
+            .documents-page {
+                padding: 20px;
+            }
+
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-full {
+                grid-column: auto;
+            }
+
+            .document-card {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .document-status {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <main class="documents-page">
+
+
+        <!-- =====================================================
+             HEADER
+             ===================================================== -->
+
+        <section class="documents-header">
+
+            <h1>
+                My Medical Documents
+            </h1>
+
+            <p>
+                Securely upload and manage your healthcare
+                documents.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             UPLOAD CARD
+             ===================================================== -->
+
+        <section class="dashboard-card upload-card">
+
+            <h2>
+                Upload Medical Document
+            </h2>
+
+            <p class="upload-card-description">
+                Upload a PDF, PNG, or JPEG medical document.
+                Maximum file size: 10 MB.
+            </p>
+
+
+            <div
+                id="uploadMessage"
+                class="document-message hidden"
+            ></div>
+
+
+            <form
+                id="documentUploadForm"
+            >
+
+                <div class="upload-grid">
+
+
+                    <!-- FILE -->
+
+                    <div class="form-group upload-full">
+
+                        <label for="documentFile">
+                            Medical Document
+                        </label>
+
+                        <input
+                            type="file"
+                            id="documentFile"
+                            name="file"
+                            class="file-input"
+                            accept=".pdf,.png,.jpg,.jpeg"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="documentType">
+                            Document Type
+                        </label>
+
+                        <select
+                            id="documentType"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                selected
+                                disabled
+                            >
+                                Select document type
+                            </option>
+
+                            <option value="ECG">
+                                ECG Report
+                            </option>
+
+                            <option value="Blood Test">
+                                Blood Test
+                            </option>
+
+                            <option value="X-Ray">
+                                X-Ray
+                            </option>
+
+                            <option value="MRI">
+                                MRI Scan
+                            </option>
+
+                            <option value="CT Scan">
+                                CT Scan
+                            </option>
+
+                            <option value="Prescription">
+                                Prescription
+                            </option>
+
+                            <option value="Discharge Summary">
+                                Discharge Summary
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group">
+
+                        <label for="documentDescription">
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            id="documentDescription"
+                            placeholder="Optional description"
+                            maxlength="500"
+                        >
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <div class="upload-full">
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="uploadDocumentButton"
+                        >
+
+                            <span id="uploadButtonText">
+                                Upload Document
+                            </span>
+
+                            <span
+                                id="uploadSpinner"
+                                class="spinner hidden"
+                            ></span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             DOCUMENT LIST
+             ===================================================== -->
+
+        <section>
+
+            <div class="documents-header">
+
+                <h2>
+                    Your Documents
+                </h2>
+
+                <p>
+                    Documents uploaded to your HealthGuard AI
+                    account.
+                </p>
+
+            </div>
+
+
+            <div
+                id="documentsContainer"
+                class="documents-list"
+            ></div>
+
+        </section>
+
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/documents.js"></script>
+
+</body>
+
+</html>

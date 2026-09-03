@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Dashboard | HealthGuard AI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="sidebar-brand">
+
+            <a
+                href="../index.html"
+                class="logo">
+
+                <span class="logo-icon">
+                    ✚
+                </span>
+
+                <span>
+                    HealthGuard<span class="logo-ai"> AI</span>
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="user-avatar"
+                id="sidebarAvatar">
+
+                DR
+
+            </div>
+
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarName">
+                    Doctor
+                </strong>
+
+                <span id="sidebarRole">
+                    Doctor
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <span class="nav-section-title">
+                CLINICAL ACCESS
+            </span>
+
+
+            <!-- Dashboard -->
+
+            <a
+                href="dashboard.html"
+                class="sidebar-link active">
+
+                <span>
+                    ▦
+                </span>
+
+                Dashboard
+
+            </a>
+
+
+            <!-- Request Access -->
+
+            <a
+                href="requests.html"
+                class="sidebar-link">
+
+                <span>
+                    ◫
+                </span>
+
+                Request Access
+
+            </a>
+
+
+            <!-- Document Access -->
+
+            <a
+                href="access.html"
+                class="sidebar-link">
+
+                <span>
+                    ▤
+                </span>
+
+                Document Access
+
+            </a>
+
+
+            <span
+                class="nav-section-title security-nav-title">
+
+                SECURITY
+
+            </span>
+
+
+            <!-- Audit Logs -->
+
+            <a
+                href="../patient/audit-logs.html"
+                class="sidebar-link">
+
+                <span>
+                    ◌
+                </span>
+
+                Audit Logs
+
+            </a>
+
+
+            <!-- Security Center -->
+
+            <a
+                href="../security/dashboard.html"
+                class="sidebar-link">
+
+                <span>
+                    🛡
+                </span>
+
+                Security Center
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-security-status">
+
+                <span class="status-dot"></span>
+
+
+                <div>
+
+                    <strong>
+                        Zero Trust Active
+                    </strong>
+
+                    <small>
+                        HealthGuard AI
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- Logout -->
+
+            <button
+                type="button"
+                class="logout-button"
+                id="logoutButton">
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="dashboard-topbar">
+
+
+            <!-- Mobile Brand -->
+
+            <div class="mobile-brand">
+
+                <a
+                    href="../index.html"
+                    class="logo">
+
+                    <span class="logo-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        HealthGuard<span class="logo-ai">
+                            AI
+                        </span>
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Topbar Right -->
+
+            <div class="topbar-right">
+
+
+                <!-- Security Pill -->
+
+                <div class="security-pill">
+
+                    <span class="status-dot"></span>
+
+                    Zero Trust Active
+
+                </div>
+
+
+                <!-- User -->
+
+                <div class="topbar-user">
+
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar">
+
+                        DR
+
+                    </div>
+
+
+                    <div>
+
+                        <strong id="topbarName">
+                            Doctor
+                        </strong>
+
+                        <span>
+                            Healthcare Professional
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             DASHBOARD CONTENT
+             ================================================= -->
+
+        <div class="dashboard-content">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <section class="page-header">
+
+
+                <div>
+
+                    <span class="page-label">
+                        CLINICAL PORTAL
+                    </span>
+
+
+                    <h1>
+
+                        Welcome back,
+                        <span id="doctorName">
+                            Doctor
+                        </span>
+
+                    </h1>
+
+
+                    <p>
+
+                        Request controlled access to patient
+                        healthcare data through consent-based
+                        Zero Trust security.
+
+                    </p>
+
+                </div>
+
+
+                <!-- Security Status -->
+
+                <div class="page-date">
+
+                    <span>
+                        SECURITY STATUS
+                    </span>
+
+
+                    <strong>
+                        ● Zero Trust Active
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 DASHBOARD STATISTICS
+                 ================================================= -->
+
+            <section class="dashboard-stats">
+
+
+                <!-- TOTAL REQUESTS -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="stat-icon blue">
+                        ◉
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Access Requests
+                        </span>
+
+
+                        <strong id="doctorRequestCount">
+                            --
+                        </strong>
+
+
+                        <small>
+                            Submitted requests
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- APPROVED REQUESTS -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="stat-icon purple">
+                        ✓
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Approved Access
+                        </span>
+
+
+                        <strong id="doctorApprovedCount">
+                            --
+                        </strong>
+
+
+                        <small>
+                            Patient approved
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ZERO TRUST -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Zero Trust
+                        </span>
+
+
+                        <strong class="safe-text">
+                            ACTIVE
+                        </strong>
+
+
+                        <small>
+                            Continuous verification
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PENDING REQUESTS -->
+
+                <div class="dashboard-stat-card">
+
+
+                    <div class="stat-icon orange">
+                        !
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Pending Requests
+                        </span>
+
+
+                        <strong id="doctorPendingCount">
+                            --
+                        </strong>
+
+
+                        <small>
+                            Awaiting patient decision
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MAIN GRID
+                 ================================================= -->
+
+            <section class="dashboard-grid">
+
+
+
+                <!-- =================================================
+                     RECENT ACCESS REQUESTS
+                     ================================================= -->
+
+                <div class="dashboard-panel large-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                ACCESS ACTIVITY
+                            </span>
+
+
+                            <h2>
+                                Recent Access Requests
+                            </h2>
+
+                        </div>
+
+
+                        <a
+                            href="requests.html"
+                            class="panel-action">
+
+                            New Request →
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- Dynamic Requests -->
+
+                    <div id="doctorRecentRequests">
+
+
+                        <div class="doctor-request-loading">
+
+                            Loading access requests...
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY PANEL
+                     ================================================= -->
+
+                <div class="dashboard-panel security-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                SECURITY
+                            </span>
+
+
+                            <h2>
+                                Access Protection
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Protection Status -->
+
+                    <div class="security-status-box">
+
+
+                        <div class="mini-risk-circle">
+
+                            <span>
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="status-caption">
+                                PROTECTION STATUS
+                            </span>
+
+
+                            <strong>
+                                Protected
+                            </strong>
+
+
+                            <small>
+
+                                Every document access is
+                                checked by HealthGuard AI.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Security Checks -->
+
+                    <div class="security-checks">
+
+
+                        <!-- Patient Consent -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Patient consent
+                                </strong>
+
+
+                                <small>
+                                    Access requires permission
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Time Limitation -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Time limitation
+                                </strong>
+
+
+                                <small>
+                                    Consent automatically expires
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- AI Analysis -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    AI risk analysis
+                                </strong>
+
+
+                                <small>
+                                    Abnormal behavior is detected
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Audit Logging -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Audit logging
+                                </strong>
+
+
+                                <small>
+                                    Access attempts are recorded
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     REQUEST ACCESS PANEL
+                     ================================================= -->
+
+                <div class="dashboard-panel large-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                PATIENT ACCESS
+                            </span>
+
+
+                            <h2>
+                                Request Medical Document Access
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <form
+                        id="accessRequestForm"
+                        class="doctor-access-form">
+
+
+                        <!-- Document ID -->
+
+                        <div class="form-group">
+
+
+                            <label for="documentId">
+
+                                Medical Document ID
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                id="documentId"
+                                min="1"
+                                placeholder="Example: 1"
+                                required>
+
+
+                            <small>
+
+                                Enter the document ID provided
+                                by the patient or hospital.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- Purpose -->
+
+                        <div class="form-group">
+
+
+                            <label for="purpose">
+
+                                Purpose of Access
+
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="purpose"
+                                placeholder="Example: Cardiac Consultation"
+                                required>
+
+                        </div>
+
+
+
+                        <!-- Time -->
+
+                        <div class="form-row">
+
+
+                            <div class="form-group">
+
+
+                                <label for="startTime">
+
+                                    Access Start
+
+                                </label>
+
+
+                                <input
+                                    type="datetime-local"
+                                    id="startTime"
+                                    required>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+
+
+                                <label for="expiryTime">
+
+                                    Access Expiry
+
+                                </label>
+
+
+                                <input
+                                    type="datetime-local"
+                                    id="expiryTime"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Message -->
+
+                        <div
+                            id="requestMessage"
+                            class="auth-message"
+                            style="display:none;">
+
+                        </div>
+
+
+
+                        <!-- Submit -->
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                            id="requestAccessButton">
+
+                            Request Controlled Access
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     WORKFLOW
+                     ================================================= -->
+
+                <div class="dashboard-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                ACCESS WORKFLOW
+                            </span>
+
+
+                            <h2>
+                                How Protected Access Works
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="doctor-workflow">
+
+
+                        <!-- Step 1 -->
+
+                        <div class="workflow-step">
+
+
+                            <span>
+                                01
+                            </span>
+
+
+                            <strong>
+                                Request
+                            </strong>
+
+
+                            <small>
+
+                                Doctor submits the medical
+                                purpose and requested document.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- Step 2 -->
+
+                        <div class="workflow-step">
+
+
+                            <span>
+                                02
+                            </span>
+
+
+                            <strong>
+                                Consent
+                            </strong>
+
+
+                            <small>
+
+                                Patient decides whether
+                                access should be granted.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- Step 3 -->
+
+                        <div class="workflow-step">
+
+
+                            <span>
+                                03
+                            </span>
+
+
+                            <strong>
+                                Verify
+                            </strong>
+
+
+                            <small>
+
+                                Zero Trust checks identity,
+                                consent and context.
+
+                            </small>
+
+                        </div>
+
+
+
+                        <!-- Step 4 -->
+
+                        <div class="workflow-step">
+
+
+                            <span>
+                                04
+                            </span>
+
+
+                            <strong>
+                                Analyze
+                            </strong>
+
+
+                            <small>
+
+                                AI evaluates behavioral
+                                access risk.
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY PRINCIPLE
+                     ================================================= -->
+
+                <div class="dashboard-panel principle-panel">
+
+
+                    <div class="principle-icon">
+                        🛡
+                    </div>
+
+
+                    <span class="panel-label">
+                        SECURITY PRINCIPLE
+                    </span>
+
+
+                    <h2>
+                        Authorization is not enough.
+                    </h2>
+
+
+                    <p>
+
+                        Even when a doctor has valid consent,
+                        HealthGuard AI continuously evaluates
+                        access behavior before releasing
+                        protected healthcare information.
+
+                    </p>
+
+
+                    <a
+                        href="access.html"
+                        class="panel-action">
+
+                        Test Document Access →
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SECURITY NOTICE
+                 ================================================= -->
+
+            <section class="security-notice">
+
+
+                <div class="notice-icon">
+                    🛡
+                </div>
+
+
+                <div>
+
+
+                    <strong>
+
+                        Access is continuously evaluated.
+
+                    </strong>
+
+
+                    <p>
+
+                        Valid patient consent allows a request
+                        to proceed, but abnormal behavior can
+                        still trigger additional authentication
+                        or access denial.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/doctor.js"></script>
+
+
+</body>
+
+</html>

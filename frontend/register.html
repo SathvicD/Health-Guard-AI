@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Create Account | HealthGuard AI</title>
+
+    <meta
+        name="description"
+        content="Create a secure HealthGuard AI healthcare account."
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+
+</head>
+
+
+<body class="auth-page">
+
+    <div class="auth-background">
+
+        <div class="auth-glow auth-glow-one"></div>
+        <div class="auth-glow auth-glow-two"></div>
+
+    </div>
+
+
+    <main class="auth-wrapper">
+
+        <section class="auth-card register-card">
+
+
+            <!-- =====================================================
+                 BRAND
+                 ===================================================== -->
+
+            <div class="auth-brand">
+
+                <a
+                    href="index.html"
+                    class="logo"
+                >
+
+                    <span class="logo-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        HealthGuard<span class="logo-ai">
+                            AI
+                        </span>
+                    </span>
+
+                </a>
+
+
+                <div class="security-badge">
+
+                    <span class="status-dot"></span>
+
+                    Secure Registration
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 HEADING
+                 ===================================================== -->
+
+            <div class="auth-heading">
+
+                <h1>
+                    Create your account
+                </h1>
+
+                <p>
+                    Join a safer healthcare data ecosystem.
+                </p>
+
+            </div>
+
+
+            <!-- =====================================================
+                 MESSAGE
+                 ===================================================== -->
+
+            <div
+                id="authMessage"
+                class="auth-message hidden"
+            ></div>
+
+
+            <!-- =====================================================
+                 REGISTER FORM
+                 ===================================================== -->
+
+            <form
+                id="registerForm"
+                class="auth-form"
+            >
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        minlength="2"
+                        maxlength="255"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ACCOUNT TYPE -->
+
+                <div class="form-group">
+
+                    <label for="role">
+                        Account Type
+                    </label>
+
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                    >
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Select your account type
+                        </option>
+
+                        <option value="patient">
+                            Patient
+                        </option>
+
+                        <option value="doctor">
+                            Doctor
+                        </option>
+
+                    </select>
+
+                    <small class="field-help">
+
+                        Doctors must be associated with an
+                        active hospital.
+
+                    </small>
+
+                </div>
+
+
+                <!-- =================================================
+                     HOSPITAL
+                     ================================================= -->
+
+                <div
+                    class="form-group hidden"
+                    id="hospitalGroup"
+                >
+
+                    <label for="hospitalId">
+                        Hospital
+                    </label>
+
+
+                    <select
+                        id="hospitalId"
+                        name="hospitalId"
+                    >
+
+                        <option
+                            value=""
+                            selected
+                            disabled
+                        >
+                            Loading hospitals...
+                        </option>
+
+                    </select>
+
+
+                    <small class="field-help">
+
+                        Select the hospital where you practice.
+
+                    </small>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Minimum 8 characters"
+                            minlength="8"
+                            maxlength="128"
+                            autocomplete="new-password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Re-enter your password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="confirmPasswordToggle"
+                        >
+                            Show
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="checkbox-row">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <span>
+
+                        I understand that HealthGuard AI is a
+                        security-focused healthcare platform and
+                        agree to use it responsibly.
+
+                    </span>
+
+                </label>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                    id="registerButton"
+                >
+
+                    <span id="registerButtonText">
+                        Create Account
+                    </span>
+
+
+                    <span
+                        id="registerSpinner"
+                        class="spinner hidden"
+                    ></span>
+
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- =====================================================
+                 LOGIN
+                 ===================================================== -->
+
+            <p class="auth-footer-text">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Sign in
+                </a>
+
+            </p>
+
+
+            <a
+                href="index.html"
+                class="back-home"
+            >
+                ← Back to HealthGuard AI
+            </a>
+
+
+        </section>
+
+    </main>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

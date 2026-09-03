@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Dashboard | HealthGuard AI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body class="dashboard-page">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <a href="../index.html" class="logo">
+
+                <span class="logo-icon">
+                    ✚
+                </span>
+
+                <span>
+                    HealthGuard<span class="logo-ai"> AI</span>
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-user">
+
+            <div
+                class="user-avatar"
+                id="sidebarAvatar"
+            >
+                PT
+            </div>
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarName">
+                    Patient
+                </strong>
+
+                <span id="sidebarRole">
+                    Patient
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <span class="nav-section-title">
+                MY HEALTH DATA
+            </span>
+
+
+            <a
+                href="dashboard.html"
+                class="sidebar-link active"
+            >
+                <span>▦</span>
+                Dashboard
+            </a>
+
+
+            <a
+                href="documents.html"
+                class="sidebar-link"
+            >
+                <span>▤</span>
+                My Documents
+            </a>
+
+
+            <a
+                href="consents.html"
+                class="sidebar-link"
+            >
+                <span>◫</span>
+                Consent Management
+            </a>
+
+
+            <span class="nav-section-title security-nav-title">
+                SECURITY
+            </span>
+
+
+            <a
+                href="audit-logs.html"
+                class="sidebar-link"
+            >
+                <span>◌</span>
+                Audit Logs
+            </a>
+
+
+            <a
+                href="../security/dashboard.html"
+                class="sidebar-link"
+            >
+                <span>🛡</span>
+                Security Center
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-security-status">
+
+                <span class="status-dot"></span>
+
+                <div>
+
+                    <strong>
+                        Data Protected
+                    </strong>
+
+                    <small>
+                        HealthGuard AI
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="logout-button"
+                id="logoutButton"
+            >
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="dashboard-main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="dashboard-topbar">
+
+            <div class="mobile-brand">
+
+                <a
+                    href="../index.html"
+                    class="logo"
+                >
+
+                    <span class="logo-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        HealthGuard<span class="logo-ai"> AI</span>
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+
+                <div class="security-pill">
+
+                    <span class="status-dot"></span>
+
+                    Data Protected
+
+                </div>
+
+
+                <div class="topbar-user">
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar"
+                    >
+                        PT
+                    </div>
+
+
+                    <div>
+
+                        <strong id="topbarName">
+                            Patient
+                        </strong>
+
+                        <span>
+                            Patient Account
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <div class="dashboard-content">
+
+
+            <!-- HEADER -->
+
+            <section class="page-header">
+
+                <div>
+
+                    <span class="page-label">
+                        PATIENT PORTAL
+                    </span>
+
+                    <h1>
+                        Welcome back,
+                        <span id="patientName">
+                            Patient
+                        </span>
+                    </h1>
+
+                    <p>
+                        Manage your medical documents,
+                        control access permissions and monitor
+                        who interacts with your healthcare data.
+                    </p>
+
+                </div>
+
+
+                <div class="page-date">
+
+                    <span>
+                        DATA SECURITY
+                    </span>
+
+                    <strong>
+                        ● Protected
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= STATS ================= -->
+
+            <section class="dashboard-stats">
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon blue">
+                        ▤
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Medical Documents
+                        </span>
+
+                        <strong id="documentCount">
+                            1
+                        </strong>
+
+                        <small>
+                            Stored securely
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon purple">
+                        ◫
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Active Consents
+                        </span>
+
+                        <strong id="activeConsentCount">
+                            --
+                        </strong>
+
+                        <small>
+                            Access permissions
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Data Protection
+                        </span>
+
+                        <strong class="safe-text">
+                            ACTIVE
+                        </strong>
+
+                        <small>
+                            Zero Trust enabled
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon orange">
+                        !
+                    </div>
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Pending Requests
+                        </span>
+
+                        <strong id="pendingRequestCount">
+                            --
+                        </strong>
+
+                        <small>
+                            Requires your decision
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= MAIN GRID ================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- ACCESS REQUESTS -->
+
+                <div class="dashboard-panel large-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                                ACCESS CONTROL
+                            </span>
+
+                            <h2>
+                                Recent Access Requests
+                            </h2>
+
+                        </div>
+
+
+                        <a
+                            href="consents.html"
+                            class="panel-action"
+                        >
+                            Manage all →
+                        </a>
+
+                    </div>
+
+
+                    <div id="patientRequests">
+
+                        <div class="patient-request-card">
+
+
+                            <div class="request-document-icon">
+                                ECG
+                            </div>
+
+
+                            <div class="request-main">
+
+                                <strong>
+                                    Cardiac Consultation
+                                </strong>
+
+                                <span>
+                                    SecureCare Medical Center
+                                </span>
+
+                                <small>
+                                    Doctor requested access to
+                                    your ECG medical report.
+                                </small>
+
+                            </div>
+
+
+                            <div class="request-status">
+
+                                <span class="status-badge pending">
+                                    PENDING
+                                </span>
+
+                            </div>
+
+
+                            <div class="request-actions">
+
+                                <button
+                                    class="approve-button"
+                                    data-consent-id="2"
+                                >
+                                    Approve
+                                </button>
+
+
+                                <button
+                                    class="deny-button"
+                                    data-consent-id="2"
+                                >
+                                    Deny
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATA SECURITY -->
+
+                <div class="dashboard-panel security-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                                YOUR PRIVACY
+                            </span>
+
+                            <h2>
+                                Data Security
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-status-box">
+
+                        <div class="mini-risk-circle">
+
+                            <span>
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="status-caption">
+                                PROTECTION STATUS
+                            </span>
+
+                            <strong>
+                                Protected
+                            </strong>
+
+                            <small>
+                                Your healthcare data is
+                                controlled by consent policies.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-checks">
+
+
+                        <div class="security-check">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Patient-controlled consent
+                                </strong>
+
+                                <small>
+                                    You decide who gets access
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-check">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Time-limited access
+                                </strong>
+
+                                <small>
+                                    Permissions automatically expire
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-check">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    AI misuse detection
+                                </strong>
+
+                                <small>
+                                    Suspicious behavior is analyzed
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="security-check">
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Complete audit trail
+                                </strong>
+
+                                <small>
+                                    Access activity is recorded
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DOCUMENT -->
+
+                <div class="dashboard-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-label">
+                                MY HEALTH RECORD
+                            </span>
+
+                            <h2>
+                                Recent Document
+                            </h2>
+
+                        </div>
+
+
+                        <a
+                            href="documents.html"
+                            class="panel-action"
+                        >
+                            View all →
+                        </a>
+
+                    </div>
+
+
+                    <div class="patient-document-card">
+
+                        <div class="document-icon-large">
+                            PDF
+                        </div>
+
+
+                        <div class="document-details">
+
+                            <strong>
+                                Rahul_ECG_Report.pdf
+                            </strong>
+
+                            <span>
+                                ECG Report
+                            </span>
+
+                            <small>
+                                Stored securely
+                            </small>
+
+                        </div>
+
+
+                        <span class="encrypted-badge">
+                            🔒 Encrypted
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRINCIPLE -->
+
+                <div class="dashboard-panel principle-panel">
+
+                    <div class="principle-icon">
+                        🛡
+                    </div>
+
+                    <span class="panel-label">
+                        YOUR DATA. YOUR CONTROL.
+                    </span>
+
+                    <h2>
+                        Healthcare data should
+                        never be shared blindly.
+                    </h2>
+
+                    <p>
+                        HealthGuard AI gives you control over
+                        who can access your medical information,
+                        why they need it and how long they can
+                        access it.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- SECURITY NOTICE -->
+
+            <section class="security-notice">
+
+                <div class="notice-icon">
+                    🛡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Every access request requires your permission.
+                    </strong>
+
+                    <p>
+                        HealthGuard AI combines patient consent,
+                        Zero Trust verification and AI-powered
+                        behavioral monitoring to protect your
+                        healthcare information.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <script src="../js/api.js"></script>
+    <script src="../js/patient.js"></script>
+
+</body>
+
+</html>

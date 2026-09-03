@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Security Center | HealthGuard AI</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+
+    <style>
+
+        /* =====================================================
+           SECURITY CENTER - ACCESS DECISION FLOW
+           ===================================================== */
+
+        .decision-flow-panel {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .decision-flow-panel .panel-header {
+            margin-bottom: 24px;
+        }
+
+        .decision-flow-panel .panel-header h2 {
+            margin-top: 8px;
+        }
+
+
+        /* =====================================================
+           DECISION FLOW CONTAINER
+           ===================================================== */
+
+        .decision-flow {
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                34px
+                minmax(0, 1fr)
+                34px
+                minmax(0, 1fr)
+                34px
+                minmax(0, 1fr);
+
+            align-items: stretch;
+
+            gap: 6px;
+
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           DECISION STEP CARD
+           ===================================================== */
+
+        .decision-step {
+
+            position: relative;
+
+            min-width: 0;
+
+            min-height: 300px;
+
+            padding: 24px 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(17, 39, 62, 0.92),
+                    rgba(8, 24, 40, 0.96)
+                );
+
+            border: 1px solid rgba(92, 151, 204, 0.18);
+
+            border-radius: 16px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .decision-step:hover {
+
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(52, 180, 255, 0.45);
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+
+        /* =====================================================
+           STEP NUMBER
+           ===================================================== */
+
+        .step-number {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #168cff,
+                    #3158e8
+                );
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 0 20px rgba(22, 140, 255, 0.20);
+        }
+
+
+        /* =====================================================
+           STEP ICON
+           ===================================================== */
+
+        .step-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-bottom: 17px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(21, 119, 190, 0.12);
+
+            border:
+                1px solid rgba(46, 164, 255, 0.15);
+
+            color: #47b9ff;
+        }
+
+
+        .step-icon svg {
+
+            width: 30px;
+
+            height: 30px;
+        }
+
+
+        /* =====================================================
+           AI ICON
+           ===================================================== */
+
+        .ai-step-icon {
+
+            color: #8c72ff;
+
+            background:
+                rgba(111, 79, 255, 0.12);
+
+            border-color:
+                rgba(132, 103, 255, 0.20);
+        }
+
+
+        .ai-step-icon span {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        /* =====================================================
+           STEP TITLE
+           ===================================================== */
+
+        .decision-step h3 {
+
+            margin: 0 0 10px;
+
+            color: #f5f9ff;
+
+            font-size: 17px;
+
+            line-height: 1.3;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           STEP DESCRIPTION
+           ===================================================== */
+
+        .decision-step p {
+
+            margin: 0;
+
+            width: 100%;
+
+            max-width: 180px;
+
+            color: #7795b4;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FLOW ARROW
+           ===================================================== */
+
+        .decision-arrow {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #3caeff;
+
+            font-size: 28px;
+
+            font-weight: 300;
+
+            user-select: none;
+        }
+
+
+        .decision-arrow span {
+
+            display: block;
+
+            margin-top: -4px;
+
+            text-shadow:
+                0 0 14px rgba(60, 174, 255, 0.35);
+        }
+
+
+        /* =====================================================
+           DECISION FLOW RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .decision-flow {
+
+                grid-template-columns:
+                    minmax(0, 1fr)
+                    24px
+                    minmax(0, 1fr)
+                    24px
+                    minmax(0, 1fr)
+                    24px
+                    minmax(0, 1fr);
+
+                gap: 4px;
+            }
+
+
+            .decision-step {
+
+                min-height: 285px;
+
+                padding:
+                    20px 12px;
+            }
+
+
+            .decision-step h3 {
+
+                font-size: 16px;
+            }
+
+
+            .decision-step p {
+
+                font-size: 12px;
+
+                line-height: 1.55;
+            }
+
+
+            .decision-arrow {
+
+                font-size: 22px;
+            }
+        }
+
+
+        @media (max-width: 950px) {
+
+            .decision-flow {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                gap: 16px;
+            }
+
+
+            .decision-arrow {
+
+                display: none;
+            }
+
+
+            .decision-step {
+
+                min-height: 270px;
+
+                padding:
+                    24px 18px;
+            }
+
+
+            .decision-step p {
+
+                max-width: 230px;
+
+                font-size: 13px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .decision-flow {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .decision-step {
+
+                min-height: auto;
+
+                padding:
+                    26px 20px;
+            }
+
+
+            .decision-step p {
+
+                max-width: 280px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="sidebar-brand">
+
+            <a
+                href="../index.html"
+                class="logo">
+
+                <span class="logo-icon">
+                    ✚
+                </span>
+
+                <span>
+                    HealthGuard<span class="logo-ai">
+                        AI
+                    </span>
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-user">
+
+            <div
+                class="user-avatar"
+                id="sidebarAvatar">
+
+                SC
+
+            </div>
+
+
+            <div class="sidebar-user-info">
+
+                <strong id="sidebarName">
+                    Security Administrator
+                </strong>
+
+                <span id="sidebarRole">
+                    Security Center
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <span class="nav-section-title">
+                SECURITY OPERATIONS
+            </span>
+
+
+            <a
+                href="dashboard.html"
+                class="sidebar-link active">
+
+                <span>
+                    ▦
+                </span>
+
+                Security Dashboard
+
+            </a>
+
+
+            <span class="nav-section-title security-nav-title">
+                MONITORING
+            </span>
+
+
+            <!--
+                Security audit page will be connected here
+                after the security-specific audit endpoint/page
+                is finalized.
+            -->
+
+            <a
+                href="#securityEvents"
+                class="sidebar-link">
+
+                <span>
+                    ◌
+                </span>
+
+                Audit Logs
+
+            </a>
+
+
+            <a
+                href="../doctor/access.html"
+                class="sidebar-link">
+
+                <span>
+                    ▤
+                </span>
+
+                Access Monitoring
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-security-status">
+
+                <span class="status-dot"></span>
+
+
+                <div>
+
+                    <strong>
+                        AI Monitoring Active
+                    </strong>
+
+                    <small>
+                        HealthGuard AI
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="logout-button"
+                id="logoutButton">
+
+                <span>
+                    ↪
+                </span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="dashboard-topbar">
+
+
+            <!-- MOBILE BRAND -->
+
+            <div class="mobile-brand">
+
+                <a
+                    href="../index.html"
+                    class="logo">
+
+                    <span class="logo-icon">
+                        ✚
+                    </span>
+
+                    <span>
+                        HealthGuard<span class="logo-ai">
+                            AI
+                        </span>
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- TOPBAR RIGHT -->
+
+            <div class="topbar-right">
+
+
+                <div class="security-pill">
+
+                    <span class="status-dot"></span>
+
+                    AI Security Monitoring
+
+                </div>
+
+
+                <div class="topbar-user">
+
+
+                    <div
+                        class="topbar-avatar"
+                        id="topbarAvatar">
+
+                        SC
+
+                    </div>
+
+
+                    <div>
+
+                        <strong id="topbarName">
+                            Security Administrator
+                        </strong>
+
+                        <span>
+                            Security Operations
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             DASHBOARD CONTENT
+             ================================================= -->
+
+        <div class="dashboard-content">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
+
+            <section class="page-header">
+
+
+                <div>
+
+                    <span class="page-label">
+                        SECURITY OPERATIONS
+                    </span>
+
+
+                    <h1>
+                        Security Center
+                    </h1>
+
+
+                    <p>
+                        Monitor Zero Trust enforcement,
+                        AI-powered behavioral analysis and
+                        protected healthcare data access.
+                    </p>
+
+                </div>
+
+
+                <div class="page-date">
+
+                    <span>
+                        SYSTEM STATUS
+                    </span>
+
+
+                    <strong>
+                        ● PROTECTED
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SECURITY STATISTICS
+                 ================================================= -->
+
+            <section class="dashboard-stats">
+
+
+                <!-- ZERO TRUST -->
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Zero Trust
+                        </span>
+
+
+                        <strong class="safe-text">
+                            ACTIVE
+                        </strong>
+
+
+                        <small>
+                            Continuous verification
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AI MONITORING -->
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon purple">
+                        AI
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            AI Monitoring
+                        </span>
+
+
+                        <strong>
+                            ACTIVE
+                        </strong>
+
+
+                        <small>
+                            Behavioral analysis
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HIGH RISK -->
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon orange">
+                        !
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            High Risk
+                        </span>
+
+
+                        <strong id="highRiskCount">
+                            --
+                        </strong>
+
+
+                        <small>
+                            Detected access events
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BLOCKED -->
+
+                <div class="dashboard-stat-card">
+
+                    <div class="stat-icon blue">
+                        ⛔
+                    </div>
+
+
+                    <div class="stat-card-content">
+
+                        <span>
+                            Blocked Access
+                        </span>
+
+
+                        <strong id="blockedAccessCount">
+                            --
+                        </strong>
+
+
+                        <small>
+                            Security decisions
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 MAIN SECURITY GRID
+                 ================================================= -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- =================================================
+                     AI SECURITY STATUS
+                     ================================================= -->
+
+                <div class="dashboard-panel large-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                AI SECURITY ENGINE
+                            </span>
+
+
+                            <h2>
+                                Behavioral Risk Monitoring
+                            </h2>
+
+                        </div>
+
+
+                        <span class="status-badge approved">
+                            MONITORING
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="security-status-box">
+
+
+                        <div class="mini-risk-circle">
+
+                            <span>
+                                AI
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="status-caption">
+                                DETECTION ENGINE
+                            </span>
+
+
+                            <strong>
+                                Isolation Forest
+                            </strong>
+
+
+                            <small>
+                                Access behavior is analyzed
+                                to identify anomalous patterns.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- AI METRICS -->
+
+                    <div class="risk-metrics">
+
+
+                        <div>
+
+                            <span>
+                                Risk Level
+                            </span>
+
+                            <strong id="securityRiskLevel">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Risk Score
+                            </span>
+
+                            <strong id="securityRiskScore">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Prediction
+                            </span>
+
+                            <strong id="securityPrediction">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="security-decision-note">
+
+
+                        <strong>
+                            Continuous behavioral analysis
+                        </strong>
+
+
+                        <span>
+                            Valid authorization does not automatically
+                            guarantee document access.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PROTECTION STATUS
+                     ================================================= -->
+
+                <div class="dashboard-panel security-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                PROTECTION
+                            </span>
+
+
+                            <h2>
+                                Security Layers
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="security-checks">
+
+
+                        <!-- AUTH -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Authentication
+                                </strong>
+
+
+                                <small>
+                                    JWT identity verification
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CONSENT -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Patient Consent
+                                </strong>
+
+
+                                <small>
+                                    Patient-controlled authorization
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ZERO TRUST -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Zero Trust
+                                </strong>
+
+
+                                <small>
+                                    Identity and access context checked
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- ML -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    ML Detection
+                                </strong>
+
+
+                                <small>
+                                    Behavioral anomalies identified
+                                </small>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- AUDIT -->
+
+                        <div class="security-check">
+
+
+                            <span class="check-icon">
+                                ✓
+                            </span>
+
+
+                            <div>
+
+                                <strong>
+                                    Audit Logging
+                                </strong>
+
+
+                                <small>
+                                    Access attempts recorded
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY DECISION FLOW
+                     ================================================= -->
+
+                <div class="dashboard-panel decision-flow-panel">
+
+
+                    <div class="panel-header">
+
+
+                        <div>
+
+                            <span class="panel-label">
+                                DECISION ENGINE
+                            </span>
+
+
+                            <h2>
+                                Access Decision Flow
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="decision-flow">
+
+
+                        <!-- =========================================
+                             STEP 01
+                             ========================================= -->
+
+                        <div class="decision-step">
+
+
+                            <div class="step-number">
+                                01
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none">
+
+                                    <path
+                                        d="M20 21V19C20 16.79 18.21 15 16 15H8C5.79 15 4 16.79 4 19V21"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"/>
+
+                                    <circle
+                                        cx="12"
+                                        cy="7"
+                                        r="4"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <h3>
+                                Authenticate
+                            </h3>
+
+
+                            <p>
+                                Verify the requesting
+                                healthcare professional
+                                using secure identity
+                                authentication.
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- ARROW -->
+
+                        <div class="decision-arrow">
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             STEP 02
+                             ========================================= -->
+
+                        <div class="decision-step">
+
+
+                            <div class="step-number">
+                                02
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none">
+
+                                    <path
+                                        d="M12 3L20 7V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V7L12 3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linejoin="round"/>
+
+                                    <path
+                                        d="M8.5 12L11 14.5L15.5 10"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <h3>
+                                Authorize
+                            </h3>
+
+
+                            <p>
+                                Validate patient consent,
+                                requesting hospital,
+                                purpose and consent
+                                time window.
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- ARROW -->
+
+                        <div class="decision-arrow">
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             STEP 03
+                             ========================================= -->
+
+                        <div class="decision-step">
+
+
+                            <div class="step-number">
+                                03
+                            </div>
+
+
+                            <div class="step-icon ai-step-icon">
+
+                                <span>
+                                    AI
+                                </span>
+
+                            </div>
+
+
+                            <h3>
+                                Analyze
+                            </h3>
+
+
+                            <p>
+                                ML evaluates the user's
+                                access behavior and
+                                identifies abnormal
+                                activity patterns.
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- ARROW -->
+
+                        <div class="decision-arrow">
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             STEP 04
+                             ========================================= -->
+
+                        <div class="decision-step">
+
+
+                            <div class="step-number">
+                                04
+                            </div>
+
+
+                            <div class="step-icon">
+
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none">
+
+                                    <path
+                                        d="M12 3L20 7V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V7L12 3Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linejoin="round"/>
+
+                                    <path
+                                        d="M9 12L11 14L15 10"
+                                        stroke="currentColor"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"/>
+
+                                </svg>
+
+                            </div>
+
+
+                            <h3>
+                                Decide
+                            </h3>
+
+
+                            <p>
+                                Allow access, require
+                                additional authentication,
+                                or deny the request
+                                based on risk.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY PHILOSOPHY
+                     ================================================= -->
+
+                <div class="dashboard-panel principle-panel">
+
+
+                    <div class="principle-icon">
+                        🛡
+                    </div>
+
+
+                    <span class="panel-label">
+                        ZERO TRUST PRINCIPLE
+                    </span>
+
+
+                    <h2>
+                        Never trust. Always verify.
+                    </h2>
+
+
+                    <p>
+                        HealthGuard AI does not treat an
+                        authenticated user as automatically
+                        trustworthy. Every protected document
+                        request is evaluated using multiple
+                        security layers.
+                    </p>
+
+
+                    <a
+                        href="#securityEvents"
+                        class="panel-action">
+
+                        View Audit Activity →
+
+                    </a>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 RECENT SECURITY EVENTS
+                 ================================================= -->
+
+            <section
+                class="dashboard-panel"
+                id="securityEventsSection">
+
+
+                <div class="panel-header">
+
+
+                    <div>
+
+                        <span class="panel-label">
+                            SECURITY EVENTS
+                        </span>
+
+
+                        <h2>
+                            Recent Security Activity
+                        </h2>
+
+                    </div>
+
+
+                    <a
+                        href="#securityEvents"
+                        class="panel-action">
+
+                        View All →
+
+                    </a>
+
+                </div>
+
+
+                <div id="securityEvents">
+
+
+                    <div class="doctor-request-loading">
+
+                        Loading security events...
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SECURITY NOTICE
+                 ================================================= -->
+
+            <section class="security-notice">
+
+
+                <div class="notice-icon">
+                    🛡
+                </div>
+
+
+                <div>
+
+
+                    <strong>
+                        Authorization is not enough.
+                    </strong>
+
+
+                    <p>
+                        A valid patient consent establishes
+                        authorization, but HealthGuard AI also
+                        evaluates behavioral risk before allowing
+                        access to protected healthcare data.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="../js/api.js"></script>
+
+    <script src="../js/security.js"></script>
+
+
+</body>
+
+</html>
