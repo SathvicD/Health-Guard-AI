@@ -29,25 +29,41 @@
 
     <style>
 
+        /* =====================================================
+           PAGE
+           ===================================================== */
+
         .documents-page {
             padding: 32px;
         }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
 
         .documents-header {
             margin-bottom: 28px;
         }
 
-        .documents-header h1 {
+        .documents-header h1,
+        .documents-header h2 {
             margin-bottom: 8px;
         }
 
         .documents-header p {
             opacity: 0.7;
+            margin: 0;
         }
+
+
+        /* =====================================================
+           UPLOAD CARD
+           ===================================================== */
 
         .upload-card {
             padding: 28px;
-            margin-bottom: 32px;
+            margin-bottom: 36px;
         }
 
         .upload-card h2 {
@@ -73,10 +89,15 @@
         .file-input {
             width: 100%;
             padding: 14px;
-            border: 1px dashed rgba(255,255,255,0.25);
+            border: 1px dashed rgba(255, 255, 255, 0.25);
             border-radius: 12px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
         }
+
+
+        /* =====================================================
+           MESSAGES
+           ===================================================== */
 
         .document-message {
             margin-bottom: 18px;
@@ -92,32 +113,62 @@
             border: 1px solid rgba(255, 80, 80, 0.35);
         }
 
+
+        /* =====================================================
+           DOCUMENT LIST
+           ===================================================== */
+
         .documents-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
+
+
+        /* =====================================================
+           DOCUMENT CARD
+           ===================================================== */
 
         .document-card {
             display: flex;
             align-items: center;
             gap: 18px;
-            padding: 20px;
+            padding: 22px;
             border-radius: 16px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
         }
 
+        .document-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(80, 170, 255, 0.25);
+            background: rgba(255, 255, 255, 0.045);
+        }
+
+
+        /* =====================================================
+           DOCUMENT ICON
+           ===================================================== */
+
         .document-icon {
-            width: 52px;
-            height: 52px;
+            width: 56px;
+            height: 56px;
             display: grid;
             place-items: center;
             border-radius: 14px;
-            background: rgba(255,255,255,0.06);
-            font-size: 24px;
+            background: rgba(255, 255, 255, 0.06);
+            font-size: 25px;
             flex-shrink: 0;
         }
+
+
+        /* =====================================================
+           DOCUMENT INFORMATION
+           ===================================================== */
 
         .document-info {
             flex: 1;
@@ -125,36 +176,141 @@
         }
 
         .document-info h3 {
-            margin: 0 0 7px;
+            margin: 0;
             word-break: break-word;
+            font-size: 19px;
         }
 
-        .document-meta {
-            display: flex;
-            gap: 8px;
-            font-size: 13px;
-            opacity: 0.65;
-        }
-
-        .document-info p {
-            margin-top: 8px;
+        .document-type {
+            margin: 7px 0 0;
             font-size: 14px;
-            opacity: 0.7;
+            opacity: 0.72;
+        }
+
+        .document-description {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.62;
+        }
+
+
+        /* =====================================================
+           TITLE + STATUS
+           ===================================================== */
+
+        .document-title-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .secure-badge {
-            display: inline-block;
-            padding: 7px 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-size: 12px;
             white-space: nowrap;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .secure-badge.encrypted {
+            border-color: rgba(80, 200, 120, 0.28);
+            background: rgba(80, 200, 120, 0.06);
+        }
+
+        .secure-badge.secure {
+            border-color: rgba(80, 170, 255, 0.25);
+            background: rgba(80, 170, 255, 0.05);
+        }
+
+
+        /* =====================================================
+           DOCUMENT META
+           ===================================================== */
+
+        .document-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 13px;
+            font-size: 13px;
+            opacity: 0.68;
+        }
+
+        .document-meta-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .document-id {
+            padding: 5px 9px;
+            border-radius: 8px;
+            border: 1px solid rgba(70, 170, 255, 0.25);
+            background: rgba(70, 170, 255, 0.07);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .document-id strong {
+            color: #43b9ff;
+        }
+
+
+        /* =====================================================
+           DOCUMENT ACTIONS
+           ===================================================== */
+
+        .document-actions {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .view-document-btn {
+            border: 1px solid rgba(70, 170, 255, 0.35);
+            background: rgba(70, 170, 255, 0.08);
+            color: #ffffff;
+            padding: 11px 17px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .view-document-btn:hover {
+            background: rgba(70, 170, 255, 0.17);
+            border-color: rgba(70, 170, 255, 0.55);
+            transform: translateY(-1px);
+        }
+
+        .view-document-btn:active {
+            transform: translateY(0);
+        }
+
+        .view-document-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        /* =====================================================
+           LOADING / EMPTY STATES
+           ===================================================== */
 
         .documents-loading,
         .documents-empty {
             text-align: center;
-            padding: 50px 20px;
+            padding: 55px 20px;
             opacity: 0.7;
         }
 
@@ -162,6 +318,273 @@
             font-size: 42px;
             margin-bottom: 12px;
         }
+
+
+        /* =====================================================
+           SECURE DOCUMENT VIEWER
+           ===================================================== */
+
+        .document-viewer-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 24px;
+
+            background:
+                rgba(2, 8, 20, 0.94);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .document-viewer-overlay.active {
+            display: flex;
+        }
+
+
+        /* =====================================================
+           VIEWER CONTAINER
+           ===================================================== */
+
+        .document-viewer-container {
+            width: min(1200px, 100%);
+            height: min(900px, 94vh);
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+
+            border-radius: 18px;
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            background: #0b1423;
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.55);
+        }
+
+
+        /* =====================================================
+           VIEWER HEADER
+           ===================================================== */
+
+        .document-viewer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 18px 22px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .viewer-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+
+            color: #43b9ff;
+        }
+
+        .document-viewer-header h2 {
+            margin: 0;
+
+            font-size: 18px;
+
+            word-break: break-word;
+        }
+
+        .viewer-close-btn {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.04);
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+        .viewer-close-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+
+        /* =====================================================
+           VIEWER SECURITY BAR
+           ===================================================== */
+
+        .document-viewer-security {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+
+            padding: 10px 22px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
+
+            background: rgba(255, 255, 255, 0.02);
+
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .document-viewer-security span {
+            padding: 5px 9px;
+
+            border-radius: 7px;
+
+            border:
+                1px solid rgba(80, 200, 120, 0.18);
+
+            background:
+                rgba(80, 200, 120, 0.04);
+        }
+
+
+        /* =====================================================
+           VIEWER CONTENT
+           ===================================================== */
+
+        .document-viewer-content {
+            position: relative;
+
+            flex: 1;
+
+            min-height: 0;
+
+            background: #161b24;
+        }
+
+        #patientDocumentFrame {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            border: 0;
+
+            background: #ffffff;
+        }
+
+
+        /* =====================================================
+           VIEWER MESSAGE
+           ===================================================== */
+
+        .patient-viewer-message {
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 2;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 30px;
+
+            background: #0b1423;
+        }
+
+        .patient-viewer-message.active {
+            display: flex;
+        }
+
+        .patient-viewer-message-content {
+            max-width: 500px;
+        }
+
+        .patient-viewer-message-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .patient-viewer-message h3 {
+            margin: 0 0 10px;
+        }
+
+        .patient-viewer-message p {
+            margin: 0;
+            opacity: 0.65;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           VIEWER FOOTER
+           ===================================================== */
+
+        .document-viewer-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 11px 20px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            font-size: 11px;
+
+            opacity: 0.6;
+
+            text-align: center;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .documents-page {
+                padding: 24px;
+            }
+
+            .document-card {
+                align-items: flex-start;
+            }
+
+            .document-actions {
+                align-self: center;
+            }
+
+        }
+
 
         @media (max-width: 700px) {
 
@@ -180,10 +603,69 @@
             .document-card {
                 align-items: flex-start;
                 flex-wrap: wrap;
+                padding: 18px;
             }
 
-            .document-status {
+            .document-info {
+                width: calc(100% - 74px);
+            }
+
+            .document-actions {
                 width: 100%;
+            }
+
+            .view-document-btn {
+                width: 100%;
+            }
+
+            .document-viewer-overlay {
+                padding: 8px;
+            }
+
+            .document-viewer-container {
+                height: 96vh;
+                border-radius: 12px;
+            }
+
+            .document-viewer-header {
+                padding: 14px;
+            }
+
+            .document-viewer-security {
+                padding: 9px 14px;
+            }
+
+            .document-viewer-footer {
+                padding: 9px 12px;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .documents-page {
+                padding: 16px;
+            }
+
+            .document-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 21px;
+            }
+
+            .document-info {
+                width: calc(100% - 66px);
+            }
+
+            .document-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 7px;
+            }
+
+            .document-viewer-header h2 {
+                font-size: 15px;
             }
 
         }
@@ -407,9 +889,138 @@
     </main>
 
 
+    <!-- =========================================================
+         PATIENT SECURE DOCUMENT VIEWER
+         ========================================================= -->
+
+    <div
+        id="patientDocumentViewer"
+        class="document-viewer-overlay"
+        aria-hidden="true"
+    >
+
+        <div class="document-viewer-container">
+
+
+            <!-- VIEWER HEADER -->
+
+            <div class="document-viewer-header">
+
+                <div>
+
+                    <span class="viewer-label">
+                        SECURE DOCUMENT VIEWER
+                    </span>
+
+                    <h2 id="patientDocumentId">
+                        Document
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="viewer-close-btn"
+                    id="patientViewerCloseButton"
+                    aria-label="Close document viewer"
+                    onclick="closePatientDocumentViewer()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <!-- SECURITY INFORMATION -->
+
+            <div class="document-viewer-security">
+
+                <span>
+                    🔐 Encrypted Storage
+                </span>
+
+                <span>
+                    ✓ Authenticated Session
+                </span>
+
+                <span>
+                    🔒 Private Viewer
+                </span>
+
+            </div>
+
+
+            <!-- VIEWER CONTENT -->
+
+            <div class="document-viewer-content">
+
+
+                <!-- Loading / Error Message -->
+
+                <div
+                    id="patientViewerMessage"
+                    class="patient-viewer-message"
+                >
+
+                    <div class="patient-viewer-message-content">
+
+                        <div
+                            id="patientViewerMessageIcon"
+                            class="patient-viewer-message-icon"
+                        >
+                            🔄
+                        </div>
+
+                        <h3 id="patientViewerMessageTitle">
+                            Opening document
+                        </h3>
+
+                        <p id="patientViewerMessageText">
+                            Please wait while HealthGuard AI securely
+                            prepares your document.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Document -->
+
+                <iframe
+                    id="patientDocumentFrame"
+                    title="Secure Medical Document Viewer"
+                ></iframe>
+
+            </div>
+
+
+            <!-- VIEWER FOOTER -->
+
+            <div class="document-viewer-footer">
+
+                <span>
+                    Your document is displayed through an authenticated
+                    HealthGuard AI session.
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
     <script src="../js/api.js"></script>
 
     <script src="../js/documents.js"></script>
+
 
 </body>
 

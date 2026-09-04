@@ -1,6 +1,7 @@
 /* =========================================================
    HEALTHGUARD AI
    Patient Document Management
+   Secure In-App Document Viewer
    ========================================================= */
 
 
@@ -75,6 +76,55 @@ const documentsContainer =
     document.getElementById(
         "documentsContainer"
     );
+
+
+/* =========================================================
+   SECURE VIEWER ELEMENTS
+   ========================================================= */
+
+const patientDocumentViewer =
+    document.getElementById(
+        "patientDocumentViewer"
+    );
+
+const patientDocumentFrame =
+    document.getElementById(
+        "patientDocumentFrame"
+    );
+
+const patientDocumentId =
+    document.getElementById(
+        "patientDocumentId"
+    );
+
+const patientViewerMessage =
+    document.getElementById(
+        "patientViewerMessage"
+    );
+
+const patientViewerMessageIcon =
+    document.getElementById(
+        "patientViewerMessageIcon"
+    );
+
+const patientViewerMessageTitle =
+    document.getElementById(
+        "patientViewerMessageTitle"
+    );
+
+const patientViewerMessageText =
+    document.getElementById(
+        "patientViewerMessageText"
+    );
+
+
+/* =========================================================
+   VIEWER STATE
+   ========================================================= */
+
+let patientDocumentBlobUrl = null;
+
+let currentlyViewedDocumentId = null;
 
 
 /* =========================================================
@@ -153,6 +203,11 @@ function formatFileSize(
     bytes
 ) {
 
+    if (!bytes) {
+        return "0 B";
+    }
+
+
     if (bytes < 1024) {
 
         return `${bytes} B`;
@@ -219,11 +274,22 @@ async function loadDocuments() {
 
         documentsContainer.innerHTML = `
             <div class="documents-empty">
-                <div class="empty-icon">⚠</div>
-                <h3>Unable to load documents</h3>
-                <p>${escapeHtml(
-                    error.message
-                )}</p>
+
+                <div class="empty-icon">
+                    ⚠
+                </div>
+
+                <h3>
+                    Unable to load documents
+                </h3>
+
+                <p>
+                    ${escapeHtml(
+                        error.message ||
+                        "An unexpected error occurred."
+                    )}
+                </p>
+
             </div>
         `;
 
@@ -275,71 +341,156 @@ function renderDocuments(
     documentsContainer.innerHTML =
         documents
             .map(
-                document => `
-                    <div class="document-card">
+                document => {
 
-                        <div class="document-icon">
-                            ${getDocumentIcon(
-                                document.document_type
-                            )}
-                        </div>
+                    const encrypted =
+                        Boolean(
+                            document.is_encrypted
+                        );
 
-                        <div class="document-info">
 
-                            <h3>
-                                ${escapeHtml(
-                                    document.document_name
+                    const securityBadge =
+                        encrypted
+                            ? `
+                                <span
+                                    class="secure-badge encrypted"
+                                >
+                                    🔐 Encrypted
+                                </span>
+                            `
+                            : `
+                                <span
+                                    class="secure-badge secure"
+                                >
+                                    Stored Securely
+                                </span>
+                            `;
+
+
+                    return `
+                        <div
+                            class="document-card"
+                            data-document-id="${document.id}"
+                        >
+
+                            <!-- DOCUMENT ICON -->
+
+                            <div class="document-icon">
+
+                                ${getDocumentIcon(
+                                    document.document_type
                                 )}
-                            </h3>
-
-                            <div class="document-meta">
-
-                                <span>
-                                    ${escapeHtml(
-                                        document.document_type
-                                    )}
-                                </span>
-
-                                <span>
-                                    •
-                                </span>
-
-                                <span>
-                                    ${formatDate(
-                                        document.created_at
-                                    )}
-                                </span>
 
                             </div>
 
-                            ${
-                                document.description
-                                    ? `
-                                        <p>
-                                            ${escapeHtml(
-                                                document.description
-                                            )}
-                                        </p>
-                                    `
-                                    : ""
-                            }
 
-                        </div>
+                            <!-- DOCUMENT INFORMATION -->
 
-                        <div class="document-status">
+                            <div class="document-info">
 
-                            <span class="secure-badge">
+
+                                <!-- TITLE + BADGE -->
+
+                                <div
+                                    class="document-title-row"
+                                >
+
+                                    <h3>
+                                        ${escapeHtml(
+                                            document.document_name
+                                        )}
+                                    </h3>
+
+                                    ${securityBadge}
+
+                                </div>
+
+
+                                <!-- TYPE -->
+
+                                <p
+                                    class="document-type"
+                                >
+                                    ${escapeHtml(
+                                        document.document_type
+                                    )}
+                                </p>
+
+
+                                <!-- DESCRIPTION -->
+
                                 ${
-                                    document.is_encrypted
-                                        ? "🔒 Encrypted"
-                                        : "Stored Securely"
+                                    document.description
+                                        ? `
+                                            <p
+                                                class="document-description"
+                                            >
+                                                ${escapeHtml(
+                                                    document.description
+                                                )}
+                                            </p>
+                                        `
+                                        : ""
                                 }
-                            </span>
+
+
+                                <!-- DOCUMENT METADATA -->
+
+                                <div
+                                    class="document-meta"
+                                >
+
+                                    <span
+                                        class="document-meta-item document-id"
+                                    >
+
+                                        <strong>
+                                            Document ID:
+                                        </strong>
+
+                                        #${document.id}
+
+                                    </span>
+
+
+                                    <span
+                                        class="document-meta-item"
+                                    >
+                                        Uploaded:
+                                        ${formatDate(
+                                            document.created_at
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ACTION -->
+
+                            <div
+                                class="document-actions"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="view-document-btn"
+                                    data-document-id="${document.id}"
+                                    onclick="viewPatientDocument(${document.id})"
+                                >
+
+                                    👁
+                                    View Document
+
+                                </button>
+
+                            </div>
 
                         </div>
+                    `;
 
-                    </div>
-                `
+                }
             )
             .join("");
 
@@ -390,6 +541,24 @@ function getDocumentIcon(
     }
 
 
+    if (
+        normalized.includes("prescription")
+    ) {
+
+        return "💊";
+
+    }
+
+
+    if (
+        normalized.includes("discharge")
+    ) {
+
+        return "🏥";
+
+    }
+
+
     return "📄";
 
 }
@@ -404,7 +573,9 @@ function formatDate(
 ) {
 
     if (!dateString) {
+
         return "Unknown date";
+
     }
 
 
@@ -445,17 +616,37 @@ function escapeHtml(
     value
 ) {
 
-    if (value === null || value === undefined) {
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return "";
+
     }
 
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
@@ -475,7 +666,15 @@ if (uploadForm) {
             hideUploadMessage();
 
 
-            if (!fileInput.files.length) {
+            /* ---------------------------------------------
+               FILE CHECK
+               --------------------------------------------- */
+
+            if (
+                !fileInput ||
+                !fileInput.files ||
+                !fileInput.files.length
+            ) {
 
                 showUploadMessage(
                     "Please select a medical document."
@@ -490,11 +689,17 @@ if (uploadForm) {
                 fileInput.files[0];
 
 
+            /* ---------------------------------------------
+               SIZE CHECK
+               --------------------------------------------- */
+
             const maxSize =
                 10 * 1024 * 1024;
 
 
-            if (file.size > maxSize) {
+            if (
+                file.size > maxSize
+            ) {
 
                 showUploadMessage(
                     "File size must not exceed 10 MB."
@@ -504,6 +709,10 @@ if (uploadForm) {
 
             }
 
+
+            /* ---------------------------------------------
+               TYPE CHECK
+               --------------------------------------------- */
 
             const allowedTypes = [
                 "application/pdf",
@@ -527,6 +736,10 @@ if (uploadForm) {
 
             }
 
+
+            /* ---------------------------------------------
+               DOCUMENT TYPE CHECK
+               --------------------------------------------- */
 
             const type =
                 documentType.value.trim();
@@ -611,6 +824,529 @@ if (uploadForm) {
     );
 
 }
+
+
+/* =========================================================
+   VIEWER MESSAGE
+   ========================================================= */
+
+function showViewerMessage(
+    icon,
+    title,
+    message
+) {
+
+    if (patientViewerMessageIcon) {
+
+        patientViewerMessageIcon.textContent =
+            icon;
+
+    }
+
+
+    if (patientViewerMessageTitle) {
+
+        patientViewerMessageTitle.textContent =
+            title;
+
+    }
+
+
+    if (patientViewerMessageText) {
+
+        patientViewerMessageText.textContent =
+            message;
+
+    }
+
+
+    if (patientViewerMessage) {
+
+        patientViewerMessage.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   HIDE VIEWER MESSAGE
+   ========================================================= */
+
+function hideViewerMessage() {
+
+    if (patientViewerMessage) {
+
+        patientViewerMessage.classList.remove(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN PATIENT DOCUMENT
+   ========================================================= */
+
+async function viewPatientDocument(
+    documentId
+) {
+
+    /* ---------------------------------------------
+       AUTHENTICATION
+       --------------------------------------------- */
+
+    const token =
+        localStorage.getItem(
+            "healthguard_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "../login.html";
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------
+       VALIDATE DOCUMENT ID
+       --------------------------------------------- */
+
+    const numericDocumentId =
+        Number(documentId);
+
+
+    if (
+        !Number.isInteger(
+            numericDocumentId
+        ) ||
+        numericDocumentId <= 0
+    ) {
+
+        alert(
+            "Invalid document ID."
+        );
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------
+       CLEAN PREVIOUS VIEWER
+       --------------------------------------------- */
+
+    closePatientDocumentViewer();
+
+
+    currentlyViewedDocumentId =
+        numericDocumentId;
+
+
+    /* ---------------------------------------------
+       UPDATE VIEWER HEADER
+       --------------------------------------------- */
+
+    if (patientDocumentId) {
+
+        patientDocumentId.textContent =
+            `Document ID: #${numericDocumentId}`;
+
+    }
+
+
+    /* ---------------------------------------------
+       OPEN VIEWER
+       --------------------------------------------- */
+
+    if (patientDocumentViewer) {
+
+        patientDocumentViewer.classList.add(
+            "active"
+        );
+
+        patientDocumentViewer.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       SHOW LOADING
+       --------------------------------------------- */
+
+    showViewerMessage(
+        "🔄",
+        "Opening document",
+        "HealthGuard AI is securely preparing your document."
+    );
+
+
+    /* ---------------------------------------------
+       CLEAR FRAME
+       --------------------------------------------- */
+
+    if (patientDocumentFrame) {
+
+        patientDocumentFrame.src =
+            "about:blank";
+
+    }
+
+
+    /* ---------------------------------------------
+       REQUEST DOCUMENT
+       --------------------------------------------- */
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/documents/${numericDocumentId}/view`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`,
+
+                        "Accept":
+                            "application/pdf,image/png,image/jpeg"
+                    },
+
+                    cache: "no-store"
+                }
+            );
+
+
+        /* -----------------------------------------
+           HANDLE AUTH FAILURE
+           ----------------------------------------- */
+
+        if (
+            response.status === 401
+        ) {
+
+            localStorage.removeItem(
+                "healthguard_token"
+            );
+
+            localStorage.removeItem(
+                "healthguard_user"
+            );
+
+            window.location.href =
+                "../login.html";
+
+            return;
+
+        }
+
+
+        /* -----------------------------------------
+           HANDLE OTHER ERRORS
+           ----------------------------------------- */
+
+        if (!response.ok) {
+
+            let errorMessage =
+                "Unable to open this document.";
+
+
+            try {
+
+                const error =
+                    await response.json();
+
+                if (
+                    error &&
+                    error.detail
+                ) {
+
+                    errorMessage =
+                        error.detail;
+
+                }
+
+            } catch (_) {
+
+                /* Response was not JSON */
+
+            }
+
+
+            throw new Error(
+                errorMessage
+            );
+
+        }
+
+
+        /* -----------------------------------------
+           GET BLOB
+           ----------------------------------------- */
+
+        const blob =
+            await response.blob();
+
+
+        if (
+            !blob ||
+            blob.size === 0
+        ) {
+
+            throw new Error(
+                "The document is empty or unavailable."
+            );
+
+        }
+
+
+        /* -----------------------------------------
+           CREATE TEMPORARY BLOB URL
+           ----------------------------------------- */
+
+        patientDocumentBlobUrl =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        /* -----------------------------------------
+           DISPLAY DOCUMENT
+           ----------------------------------------- */
+
+        if (patientDocumentFrame) {
+
+            patientDocumentFrame.src =
+                patientDocumentBlobUrl;
+
+
+            patientDocumentFrame.onload =
+                () => {
+
+                    hideViewerMessage();
+
+                };
+
+        }
+
+
+        /*
+         * Some browsers do not fire iframe.onload
+         * consistently for PDF blob URLs.
+         *
+         * Remove the loading message after a
+         * short delay if the document has loaded.
+         */
+
+        setTimeout(
+            () => {
+
+                if (
+                    currentlyViewedDocumentId ===
+                    numericDocumentId
+                ) {
+
+                    hideViewerMessage();
+
+                }
+
+            },
+            1200
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Secure document viewer error:",
+            error
+        );
+
+
+        showViewerMessage(
+            "⚠️",
+            "Unable to open document",
+            error.message ||
+            "HealthGuard AI could not securely load this document."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE PATIENT DOCUMENT VIEWER
+   ========================================================= */
+
+function closePatientDocumentViewer() {
+
+    currentlyViewedDocumentId =
+        null;
+
+
+    /* ---------------------------------------------
+       STOP FRAME
+       --------------------------------------------- */
+
+    if (patientDocumentFrame) {
+
+        patientDocumentFrame.src =
+            "about:blank";
+
+    }
+
+
+    /* ---------------------------------------------
+       RELEASE BLOB URL
+       --------------------------------------------- */
+
+    if (
+        patientDocumentBlobUrl
+    ) {
+
+        URL.revokeObjectURL(
+            patientDocumentBlobUrl
+        );
+
+        patientDocumentBlobUrl =
+            null;
+
+    }
+
+
+    /* ---------------------------------------------
+       HIDE VIEWER
+       --------------------------------------------- */
+
+    if (patientDocumentViewer) {
+
+        patientDocumentViewer.classList.remove(
+            "active"
+        );
+
+        patientDocumentViewer.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       RESET VIEWER MESSAGE
+       --------------------------------------------- */
+
+    hideViewerMessage();
+
+
+    if (patientDocumentId) {
+
+        patientDocumentId.textContent =
+            "Document";
+
+    }
+
+}
+
+
+/* =========================================================
+   ESC KEY → CLOSE VIEWER
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Escape" &&
+            patientDocumentViewer &&
+            patientDocumentViewer.classList.contains(
+                "active"
+            )
+        ) {
+
+            closePatientDocumentViewer();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PREVENT BACKGROUND SCROLL WHILE VIEWER IS OPEN
+   ========================================================= */
+
+if (patientDocumentViewer) {
+
+    const observer =
+        new MutationObserver(
+            () => {
+
+                const isOpen =
+                    patientDocumentViewer.classList.contains(
+                        "active"
+                    );
+
+
+                document.body.style.overflow =
+                    isOpen
+                        ? "hidden"
+                        : "";
+
+            }
+        );
+
+
+    observer.observe(
+        patientDocumentViewer,
+        {
+            attributes: true,
+            attributeFilter: [
+                "class"
+            ]
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CLEANUP ON PAGE EXIT
+   ========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        if (
+            patientDocumentBlobUrl
+        ) {
+
+            URL.revokeObjectURL(
+                patientDocumentBlobUrl
+            );
+
+            patientDocumentBlobUrl =
+                null;
+
+        }
+
+    }
+);
 
 
 /* =========================================================

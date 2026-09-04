@@ -11,9 +11,324 @@
 
     <title>Document Access | HealthGuard AI</title>
 
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/dashboard.css">
-    <link rel="stylesheet" href="../css/responsive.css">
+    <link
+        rel="stylesheet"
+        href="../css/style.css">
+
+    <link
+        rel="stylesheet"
+        href="../css/dashboard.css">
+
+    <link
+        rel="stylesheet"
+        href="../css/responsive.css">
+
+
+    <style>
+
+        /* =================================================
+           SECURE DOCUMENT VIEWER
+           ================================================= */
+
+        .secure-viewer-panel {
+            grid-column: 1 / -1;
+            margin-top: 4px;
+        }
+
+
+        .secure-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+
+        .secure-viewer-document-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+
+        .secure-viewer-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(34, 197, 94, 0.12);
+            font-size: 24px;
+        }
+
+
+        .secure-viewer-document-info h2 {
+            margin: 0 0 4px;
+        }
+
+
+        .secure-viewer-document-info p {
+            margin: 0;
+            opacity: 0.7;
+        }
+
+
+        .secure-viewer-security {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(34, 197, 94, 0.08);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            white-space: nowrap;
+        }
+
+
+        .secure-viewer-security .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+        }
+
+
+        /* =================================================
+           CLOSE VIEWER BUTTON
+           ================================================= */
+
+        .secure-viewer-close {
+            margin-left: auto;
+            margin-top: 14px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+
+        .secure-viewer-close button {
+            padding: 10px 16px;
+            border-radius: 9px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            color: inherit;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.2s ease;
+        }
+
+
+        .secure-viewer-close button:hover {
+            background: rgba(255, 255, 255, 0.09);
+        }
+
+
+        /* =================================================
+           VIEWER METADATA
+           ================================================= */
+
+        .secure-viewer-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 16px 0;
+        }
+
+
+        .secure-viewer-meta-item {
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+
+        .secure-viewer-meta-item span {
+            display: block;
+            font-size: 12px;
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+
+
+        .secure-viewer-meta-item strong {
+            font-size: 14px;
+        }
+
+
+        #secureViewerExpiry {
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+
+        #secureViewerExpiry.expired {
+            color: #ef4444;
+        }
+
+
+        /* =================================================
+           DOCUMENT VIEWER CONTAINER
+           ================================================= */
+
+        .secure-viewer-container {
+            position: relative;
+            width: 100%;
+            min-height: 720px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+
+        #secureDocumentFrame {
+            display: none;
+            width: 100%;
+            height: 720px;
+            border: none;
+            background: #ffffff;
+        }
+
+
+        #secureViewerMessage {
+            min-height: 720px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+
+        /* =================================================
+           VIEWER LOADING
+           ================================================= */
+
+        .secure-viewer-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+
+        .secure-viewer-loading-icon {
+            font-size: 42px;
+        }
+
+
+        .secure-viewer-loading p {
+            margin: 0;
+            opacity: 0.7;
+        }
+
+
+        /* =================================================
+           VIEWER ERROR
+           ================================================= */
+
+        .secure-viewer-error {
+            max-width: 500px;
+        }
+
+
+        .secure-viewer-error strong {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+
+        .secure-viewer-error p {
+            opacity: 0.7;
+        }
+
+
+        /* =================================================
+           VIEWER EXPIRED
+           ================================================= */
+
+        .secure-viewer-expired {
+            max-width: 520px;
+        }
+
+
+        .secure-expired-icon {
+            font-size: 54px;
+            margin-bottom: 12px;
+        }
+
+
+        .secure-viewer-expired h3 {
+            margin: 0 0 10px;
+            font-size: 24px;
+        }
+
+
+        .secure-viewer-expired p {
+            margin: 0 0 10px;
+            opacity: 0.75;
+        }
+
+
+        .secure-viewer-expired small {
+            opacity: 0.55;
+        }
+
+
+        /* =================================================
+           SECURITY WARNING
+           ================================================= */
+
+        .secure-viewer-warning {
+            margin-top: 14px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.18);
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+
+        /* =================================================
+           MOBILE
+           ================================================= */
+
+        @media (max-width: 768px) {
+
+            .secure-viewer-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+
+            .secure-viewer-security {
+                width: 100%;
+            }
+
+
+            .secure-viewer-container {
+                min-height: 520px;
+            }
+
+
+            #secureDocumentFrame {
+                height: 520px;
+            }
+
+
+            #secureViewerMessage {
+                min-height: 520px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -21,18 +336,24 @@
 <body class="dashboard-page">
 
 
+    <!-- =================================================
+         SIDEBAR
+         ================================================= -->
+
     <aside class="sidebar">
 
         <div class="sidebar-brand">
 
-            <a href="../index.html" class="logo">
+            <a
+                href="../index.html"
+                class="logo">
 
                 <span class="logo-icon">
                     ✚
                 </span>
 
                 <span>
-                    HealthGuard<span class="logo-ai"> AI</span>
+                    HealthGuard<span class="logo-ai">AI</span>
                 </span>
 
             </a>
@@ -45,8 +366,11 @@
             <div
                 class="user-avatar"
                 id="sidebarAvatar">
+
                 DR
+
             </div>
+
 
             <div class="sidebar-user-info">
 
@@ -152,15 +476,24 @@
     </aside>
 
 
+    <!-- =================================================
+         MAIN
+         ================================================= -->
+
     <main class="dashboard-main">
 
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
 
         <header class="dashboard-topbar">
 
             <div class="mobile-brand">
 
-                <a href="../index.html"
-                   class="logo">
+                <a
+                    href="../index.html"
+                    class="logo">
 
                     <span class="logo-icon">
                         ✚
@@ -198,6 +531,7 @@
 
                     </div>
 
+
                     <div>
 
                         <strong id="topbarName">
@@ -217,8 +551,16 @@
         </header>
 
 
+        <!-- =================================================
+             CONTENT
+             ================================================= -->
+
         <div class="dashboard-content">
 
+
+            <!-- =================================================
+                 PAGE HEADER
+                 ================================================= -->
 
             <section class="page-header">
 
@@ -243,8 +585,16 @@
             </section>
 
 
+            <!-- =================================================
+                 DASHBOARD GRID
+                 ================================================= -->
+
             <section class="dashboard-grid">
 
+
+                <!-- =================================================
+                     DOCUMENT ACCESS
+                     ================================================= -->
 
                 <div class="dashboard-panel large-panel">
 
@@ -253,7 +603,7 @@
                         <div>
 
                             <span class="panel-label">
-                                ACCESS REQUEST
+                                DOCUMENT ACCESS
                             </span>
 
                             <h2>
@@ -265,8 +615,9 @@
                     </div>
 
 
-                    <form id="documentAccessForm"
-                          class="doctor-access-form">
+                    <form
+                        id="documentAccessForm"
+                        class="doctor-access-form">
 
 
                         <div class="form-group">
@@ -275,12 +626,26 @@
                                 Medical Document ID
                             </label>
 
+
                             <input
                                 type="number"
                                 id="accessDocumentId"
                                 min="1"
-                                placeholder="Example: 1"
+                                placeholder="Example: 53"
                                 required>
+
+
+                            <small
+                                style="
+                                    display:block;
+                                    margin-top:8px;
+                                    opacity:0.6;
+                                ">
+
+                                Enter the document ID provided
+                                by the patient.
+
+                            </small>
 
                         </div>
 
@@ -289,6 +654,7 @@
                             id="accessMessage"
                             class="auth-message"
                             style="display:none;">
+
                         </div>
 
 
@@ -305,6 +671,10 @@
 
                 </div>
 
+
+                <!-- =================================================
+                     AI SECURITY PANEL
+                     ================================================= -->
 
                 <div class="dashboard-panel security-panel">
 
@@ -400,11 +770,11 @@
                             <div>
 
                                 <strong>
-                                    Security decision
+                                    Secure document viewer
                                 </strong>
 
                                 <small>
-                                    Allow, require MFA or deny.
+                                    Medical data is streamed after authorization.
                                 </small>
 
                             </div>
@@ -416,7 +786,9 @@
                 </div>
 
 
-                <!-- RESULT -->
+                <!-- =================================================
+                     SECURITY DECISION
+                     ================================================= -->
 
                 <div
                     class="dashboard-panel"
@@ -447,7 +819,191 @@
                 </div>
 
 
-                <!-- EXPLANATION -->
+                <!-- =================================================
+                     SECURE DOCUMENT VIEWER
+                     ================================================= -->
+
+                <div
+                    class="dashboard-panel secure-viewer-panel"
+                    id="secureDocumentViewerPanel"
+                    style="display:none;">
+
+
+                    <!-- VIEWER HEADER -->
+
+                    <div class="secure-viewer-header">
+
+
+                        <div class="secure-viewer-document-info">
+
+                            <div class="secure-viewer-icon">
+                                🔐
+                            </div>
+
+
+                            <div>
+
+                                <h2
+                                    id="secureViewerDocumentName">
+
+                                    Medical Document
+
+                                </h2>
+
+
+                                <p
+                                    id="secureViewerDocumentType">
+
+                                    Protected Medical Record
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="secure-viewer-security">
+
+                            <span class="status-dot"></span>
+
+                            <span>
+                                Secure View Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VIEWER METADATA
+                         ================================================= -->
+
+                    <div class="secure-viewer-meta">
+
+
+                        <div class="secure-viewer-meta-item">
+
+                            <span>
+                                Access Mode
+                            </span>
+
+                            <strong>
+                                In-App Only
+                            </strong>
+
+                        </div>
+
+
+                        <div class="secure-viewer-meta-item">
+
+                            <span>
+                                Storage Protection
+                            </span>
+
+                            <strong>
+                                Encrypted Storage
+                            </strong>
+
+                        </div>
+
+
+                        <div class="secure-viewer-meta-item">
+
+                            <span>
+                                Consent Remaining
+                            </span>
+
+                            <strong id="secureViewerExpiry">
+                                Checking...
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         DOCUMENT VIEWER
+                         ================================================= -->
+
+                    <div class="secure-viewer-container">
+
+
+                        <div id="secureViewerMessage">
+
+                            <div class="secure-viewer-loading">
+
+                                <div class="secure-viewer-loading-icon">
+                                    🔐
+                                </div>
+
+
+                                <strong>
+                                    Opening secure medical document...
+                                </strong>
+
+
+                                <p>
+                                    HealthGuard AI is verifying
+                                    the protected document session.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <iframe
+                            id="secureDocumentFrame"
+                            title="Secure Medical Document Viewer">
+                        </iframe>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         CLOSE VIEWER
+                         ================================================= -->
+
+                    <div class="secure-viewer-close">
+
+                        <button
+                            type="button"
+                            onclick="closeSecureViewer()">
+
+                            ✕ Close Secure Viewer
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SECURITY WARNING
+                         ================================================= -->
+
+                    <div class="secure-viewer-warning">
+
+                        🔒
+                        This document is available only through
+                        the authenticated HealthGuard AI viewer.
+                        Access is governed by patient consent,
+                        authorization checks, and AI-based behavior
+                        analysis.
+
+                        The viewer automatically locks when the
+                        approved consent period expires.
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     EXPLANATION
+                     ================================================= -->
 
                 <div class="dashboard-panel principle-panel">
 
@@ -466,14 +1022,18 @@
                     <p>
                         Even after patient approval,
                         HealthGuard AI evaluates the doctor's
-                        behavioral access pattern before
-                        releasing the document.
+                        access context and behavioral pattern
+                        before releasing the document.
                     </p>
 
                 </div>
 
             </section>
 
+
+            <!-- =================================================
+                 SECURITY NOTICE
+                 ================================================= -->
 
             <section class="security-notice">
 
@@ -484,14 +1044,16 @@
                 <div>
 
                     <strong>
-                        Suspicious behavior can override valid authorization.
+                        Suspicious behavior can override
+                        valid authorization.
                     </strong>
 
                     <p>
-                        A valid consent request is only one layer
-                        of protection. HealthGuard AI continuously
-                        analyzes access behavior to detect potential
-                        misuse.
+                        A valid consent request is only one
+                        layer of protection. HealthGuard AI
+                        analyzes access behavior to detect
+                        potential misuse and can deny access
+                        when the risk is high.
                     </p>
 
                 </div>
@@ -503,7 +1065,12 @@
     </main>
 
 
+    <!-- =================================================
+         JAVASCRIPT
+         ================================================= -->
+
     <script src="../js/api.js"></script>
+
     <script src="../js/doctor.js"></script>
 
 </body>
